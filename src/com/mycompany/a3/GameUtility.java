@@ -21,18 +21,18 @@ public class GameUtility {
 	public static final int STEER_AMOUNT = 5;
 	public static final int MAX_STEER_LEFT = -40;
 	public static final int MAX_STEER_RIGHT = 40;
-	public static final int MAX_STATION_SIZE = 80;
+	public static final int MAX_STATION_SIZE = 60;
 	public static final int MIN_STATION_SIZE = 40;
 	public static final int COLLISION_DAMAGE = 10;
 	public static final int NUM_DRONES = randomInt(2, 5);
 	public static final int BASE_SIZE = 80;
 	public static final float START_X = 800;
 	public static final float START_Y = 40;
-	public static final int ROBOT_SIZE = 100;
-	public static final int[] BASE_COLOR = {000,255,000}; // GREEN
-	public static final int[] ROBOT_COLOR = {000,000,255}; // BLUE
-	public static final int[] DRONE_COLOR = {255,000,000}; // RED
-	public static final int[] ENERGYSTATION_COLOR = {000,255,255}; // TURQUOISE I THINK
+	public static final int ROBOT_SIZE = 60;
+	public static final int[] BASE_COLOR = {000,200,200}; // GREEN
+	public static final int[] ROBOT_COLOR = {150,000,255}; // BLUE
+	public static final int[] DRONE_COLOR = {255,100,000}; // RED
+	public static final int[] ENERGYSTATION_COLOR = {000,150,150}; // TURQUOISE I THINK
 	public static final int NPR_ENERGY_LEVEL = 200;
 
 	public static int gameSizeX() { return GameSize.x; }

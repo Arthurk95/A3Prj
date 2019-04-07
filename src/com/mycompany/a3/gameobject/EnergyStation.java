@@ -48,10 +48,11 @@ public class EnergyStation extends Fixed{
 	}
 	
 	public void draw(Graphics g, Point pCmpRelPrnt) {
-		float drawX = pCmpRelPrnt.getX() + this.getLocation().getX();
-		float drawY = pCmpRelPrnt.getY() + this.getLocation().getY();
+		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
+		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
 		g.setColor(this.getColorAsInt());
-		g.drawArc((int)drawX, (int)drawY, this.getSize(), this.getSize(), 0, 360);
+		g.drawArc(centerX, centerY, this.getSize(), this.getSize(), 0, 360);
+		g.drawString(String.valueOf(capacity), centerX, centerY);
 	}
 	
 	public int getCapacity() {return capacity;}

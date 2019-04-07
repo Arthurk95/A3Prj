@@ -10,7 +10,6 @@ package com.mycompany.a3;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
-import com.codename1.ui.plaf.Border;
 import com.mycompany.a3.commands.*;
 import com.mycompany.a3.gameworld.GameWorld;
 import com.mycompany.a3.gameworld.MapView;

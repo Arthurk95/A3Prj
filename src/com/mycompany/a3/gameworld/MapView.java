@@ -8,6 +8,8 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.TextArea;
 import com.codename1.ui.geom.Point;
+import com.codename1.ui.plaf.Border;
+import com.mycompany.a3.GameUtility;
 import com.mycompany.a3.gameobject.GameObject;
 import com.mycompany.a3.objectcollection.GameObjectCollection;
 import com.mycompany.a3.objectcollection.IIterator;
@@ -21,9 +23,10 @@ public class MapView extends Container implements Observer{
 	}
 	public void update(Observable o, Object arg) {
 		gw = (GameWorld)o;
-		this.getAllStyles().setBgTransparency(255);
-		this.getAllStyles().setBgColor(ColorUtil.rgb(200, 200, 200));
+		// red border
+		this.getAllStyles().setBorder(Border.createLineBorder(1, ColorUtil.rgb(255, 0, 0)));
 		System.out.println(gw.outputGameMap());
+		System.out.println("WIDTH: " + GameUtility.gameSizeX() + " | HEIGHT: " + GameUtility.gameSizeY());
 		drawWorld();
 	}
 

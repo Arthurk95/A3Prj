@@ -59,10 +59,10 @@ public class PlayerRobot extends Robot{
 	}
 	
 	public void draw(Graphics g, Point pCmpRelPrnt) {
-		float drawX = pCmpRelPrnt.getX() + this.getLocation().getX();
-		float drawY = pCmpRelPrnt.getY() + this.getLocation().getY();
+		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
+		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
 		g.setColor(this.getColorAsInt());
-		g.fillRect((int)drawX, (int)drawY, this.getSize(), this.getSize());
+		g.fillRect(centerX, centerY, this.getSize(), this.getSize());
 	}
 	
 	public String toString() {

@@ -53,6 +53,7 @@ public class Base extends Fixed{
 
 		g.setColor(this.getColorAsInt());
 		g.fillPolygon(xPoints, yPoints, 3);
+		g.drawString(String.valueOf(sequenceNumber), centerX, centerY);
 	}
 	
 	public String toString() {
