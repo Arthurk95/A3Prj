@@ -30,7 +30,29 @@ public class Base extends Fixed{
 	public void setColor(int[] color) {}
 	
 	public void draw(Graphics g, Point pCmpRelPrnt) {
+		int halfSize = this.getSize() / 2;
+		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
+		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
 		
+		// Creates a triangle
+		
+		// Top of triangle
+		int xCorner1 = centerX; 
+		int yCorner1 = centerY + halfSize;
+
+		// bottom left corner
+		int xCorner2 = centerX - halfSize;
+		int yCorner2 = centerY - halfSize;
+		
+		// bottom right corner
+		int xCorner3 = centerX + halfSize;
+		int yCorner3 = centerY - halfSize;
+		
+		int xPoints[] = {xCorner1, xCorner2, xCorner3};
+		int yPoints[] = {yCorner1, yCorner2, yCorner3};
+
+		g.setColor(this.getColorAsInt());
+		g.fillPolygon(xPoints, yPoints, 3);
 	}
 	
 	public String toString() {

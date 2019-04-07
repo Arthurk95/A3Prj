@@ -22,7 +22,7 @@ public class EnergyStation extends Fixed{
 	
 	public EnergyStation(float x, float y, int[] color, int size){
 		super(x, y, color, size); // initial values passed to Fixed
-		capacity = getSize()*2;
+		capacity = getSize()/3;
 	}
 
 	/* Fades the color of the EnergyStation by half its RGB value 
@@ -48,7 +48,10 @@ public class EnergyStation extends Fixed{
 	}
 	
 	public void draw(Graphics g, Point pCmpRelPrnt) {
-		
+		float drawX = pCmpRelPrnt.getX() + this.getLocation().getX();
+		float drawY = pCmpRelPrnt.getY() + this.getLocation().getY();
+		g.setColor(this.getColorAsInt());
+		g.drawArc((int)drawX, (int)drawY, this.getSize(), this.getSize(), 0, 360);
 	}
 	
 	public int getCapacity() {return capacity;}

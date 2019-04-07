@@ -1,5 +1,7 @@
 package com.mycompany.a3.gameobject;
 
+import com.codename1.ui.Graphics;
+import com.codename1.ui.geom.Point;
 import com.mycompany.a3.GameUtility;
 import com.mycompany.a3.strategy.Strategy;
 
@@ -34,6 +36,13 @@ public class NonPlayerRobot extends Robot{
 		energyLevel = GameUtility.NPR_ENERGY_LEVEL; // never runs out of energy
 	}
 
+	public void draw(Graphics g, Point pCmpRelPrnt) {
+		float drawX = pCmpRelPrnt.getX() + this.getLocation().getX();
+		float drawY = pCmpRelPrnt.getY() + this.getLocation().getY();
+		g.setColor(this.getColorAsInt());
+		g.drawRect((int)drawX, (int)drawY, this.getSize(), this.getSize());
+	}
+	
 	public String toString() {
 		String parentDesc = super.toString();
 		String thisDesc;
