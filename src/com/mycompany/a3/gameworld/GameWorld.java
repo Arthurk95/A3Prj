@@ -134,7 +134,7 @@ public class GameWorld extends Observable {
 	private void createDrone() {
 		objectsCollection.add(new Drone(
 				GameUtility.randomX(), GameUtility.randomY(), 
-				GameUtility.DRONE_COLOR, GameUtility.randomInt(10, 30)));
+				GameUtility.DRONE_COLOR, GameUtility.randomInt(30, 60)));
 		notifyObservers();
 	}
 	
