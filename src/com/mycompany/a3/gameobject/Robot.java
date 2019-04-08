@@ -8,6 +8,9 @@
 package com.mycompany.a3.gameobject;
 
 import com.codename1.ui.geom.Point;
+
+import java.util.ArrayList;
+
 import com.codename1.ui.Graphics;
 import com.mycompany.a3.GameUtility;
 
@@ -24,7 +27,7 @@ public class Robot extends Movable implements ISteerable{
 	private int steeringDirection = 0;
 	private int maximumSpeed = GameUtility.MAX_SPEED;
 	private float energyLevel = 100;
-	private float energyConsumptionRate = 4;
+	private float energyConsumptionRate = 1;
 	private int damageLevel = 0;
 	private int MAX_DAMAGE = 100;
 	private int lastBaseReached = 1;
@@ -44,6 +47,18 @@ public class Robot extends Movable implements ISteerable{
 		updateHeading();
 		super.move(tickRate);
 		energyLevel = energyLevel - (energyConsumptionRate/tickRate);
+		checkIfValidCoordinates();
+	}
+	
+	private void checkIfValidCoordinates() {
+		if(this.getXCoordinate() > GameUtility.gameSizeX())
+			setLocation(GameUtility.gameSizeX(), this.getYCoordinate());
+		if(this.getYCoordinate() > GameUtility.gameSizeY())
+			setLocation(this.getXCoordinate(), GameUtility.gameSizeY());
+		if(this.getXCoordinate() < 0)
+			setLocation(0, this.getYCoordinate());
+		if(this.getYCoordinate() < 0)
+			setLocation(this.getXCoordinate(), 0);
 	}
 	
 	/* Makes sure the speed is within a valid range
@@ -155,7 +170,6 @@ public class Robot extends Movable implements ISteerable{
 			return true;
 		}
 		return false;
-		
 	}
 	
 	/* Reduces speed by 5,*/
@@ -187,17 +201,25 @@ public class Robot extends Movable implements ISteerable{
 			}
 			setHeading(newHeading);
 		}
-		
-		
 	}
-	
-	public boolean collidesWith(GameObject otherObject) {
-		
-		return false;
-	}
-	
+
+	/* Handles the collision based on the type of the otherObject. 
+	 * If the otherObject also is affected, handles that too. */
 	public void handleCollision(GameObject otherObject) {
-		
+		if (otherObject instanceof EnergyStation) {
+			collisionWithEnergyStation(((EnergyStation)otherObject).getCapacity());
+			((EnergyStation)otherObject).collisionWithPlayer();
+		}
+		else if (otherObject instanceof Base) {
+			updateLastBase(((Base)otherObject).getSequenceOrder());
+		}
+		else if (otherObject instanceof Drone) {
+			collisionWithDrone();
+		}
+		else if (otherObject instanceof Robot) {
+			collisionWithRobot();
+			((Robot)otherObject).collisionWithRobot();
+		}
 	}
 	
 	/* Adds stationCapacity to the Robot's energyLevel, up to 100 */
@@ -218,6 +240,13 @@ public class Robot extends Movable implements ISteerable{
 		else System.out.println("Base " + baseReached + " cannot be reached");
 	}
 	
+	private void collisionWithDrone() {
+		damageTaken(GameUtility.COLLISION_DAMAGE/2);
+	}
+
+	public void collisionWithRobot() {
+		damageTaken(GameUtility.COLLISION_DAMAGE);
+	}
 	public void draw(Graphics g, Point pCmpRelPrnt) {
 	}
 	

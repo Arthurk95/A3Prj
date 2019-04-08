@@ -1,5 +1,7 @@
 package com.mycompany.a3.gameobject;
 
+import java.util.ArrayList;
+
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point;
 import com.mycompany.a3.GameUtility;
@@ -12,6 +14,7 @@ import com.mycompany.a3.strategy.Strategy;
 public class NonPlayerRobot extends Robot{
 	private Strategy currentStrategy;
 	private int energyLevel = GameUtility.NPR_ENERGY_LEVEL;
+	private ArrayList<GameObject> isCollidingWith = new ArrayList<>();
 	
 	public NonPlayerRobot(float startingX, float startingY, int[] color, int size) {
 		super(startingX, startingY, color, size);
@@ -28,7 +31,7 @@ public class NonPlayerRobot extends Robot{
 	public void invokeStrategy() {
 		currentStrategy.apply();
 	}
-	
+
 	public void move(int tickRate) {
 		invokeStrategy();
 		super.move(tickRate);

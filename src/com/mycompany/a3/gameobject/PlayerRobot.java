@@ -7,6 +7,8 @@
 
 package com.mycompany.a3.gameobject;
 
+import java.util.ArrayList;
+
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point;
 import com.mycompany.a3.GameUtility;
@@ -19,6 +21,7 @@ import com.mycompany.a3.GameUtility;
 
 public class PlayerRobot extends Robot{
 	private static PlayerRobot playerRobot;
+	private ArrayList<GameObject> isCollidingWith = new ArrayList<>();
 	
 	private PlayerRobot() {
 		super(GameUtility.startX(), GameUtility.startY(), 

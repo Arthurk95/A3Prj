@@ -97,11 +97,11 @@ public class AttackStrategy implements Strategy{
 		while(currentHeading != targetHeading) {
 			currentHeading = currentHeading + iterator;
 			difference++;
-			if (currentHeading == targetHeading)
+			if ((currentHeading == targetHeading) || (difference > 359))
 				break;
 			if (currentHeading < 0)
 				currentHeading = 359;
-			if (currentHeading > 360) {
+			else if (currentHeading > 360) {
 				currentHeading = 1;
 			}
 		}

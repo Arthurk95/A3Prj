@@ -7,6 +7,8 @@
 
 package com.mycompany.a3.gameobject;
 
+import java.util.ArrayList;
+
 import com.codename1.charts.util.ColorUtil;
 
 
@@ -26,6 +28,7 @@ public abstract class GameObject implements IDrawable, ICollider{
 	private int[] color = new int[3]; // RGB color
 	private ColorUtil colorCU = new ColorUtil();
 	private Location location = new Location();
+	private ArrayList<GameObject> isCollidingWith = new ArrayList<>();
 
 	public GameObject() {}
 	
@@ -39,24 +42,41 @@ public abstract class GameObject implements IDrawable, ICollider{
 	}
 	
 	public boolean collidesWith(GameObject otherObject) { 
-		int halfSize = getSize()/2;
+		int halfSizeThis = this.getSize()/2;
+		int halfSizeOther = otherObject.getSize()/2;
 		boolean isCollision = false;
 		
-		int rightX1 = (int)(otherObject.getXCoordinate() + halfSize);
-		int leftX1 = (int)(otherObject.getXCoordinate() - halfSize);
-		int topY1 = (int)(otherObject.getYCoordinate() - halfSize);
-		int bottomY1 = (int)(otherObject.getYCoordinate() + halfSize);
+		int rightX1 = (int)(this.getXCoordinate() + halfSizeThis);
+		int leftX1 = (int)(this.getXCoordinate() - halfSizeThis);
+		int topY1 = (int)(this.getYCoordinate() + halfSizeThis);
+		int bottomY1 = (int)(this.getYCoordinate() - halfSizeThis);
 			
-		int rightX2 = (int)(otherObject.getXCoordinate() + halfSize);
-		int leftX2 = (int)(otherObject.getXCoordinate() - halfSize);
-		int topY2 = (int)(otherObject.getYCoordinate() - halfSize);
-		int bottomY2 = (int)(otherObject.getYCoordinate() + halfSize);
-			
-		if((rightX1 < leftX2) || (leftX1 > rightX2)) {}
-		else 
-			if((topY2 < bottomY1) || (topY1 < bottomY2)) {}
-		else 
-			isCollision = true;
+		int rightX2 = (int)(otherObject.getXCoordinate() + halfSizeOther);
+		int leftX2 = (int)(otherObject.getXCoordinate() - halfSizeOther);
+		int topY2 = (int)(otherObject.getYCoordinate() + halfSizeOther);
+		int bottomY2 = (int)(otherObject.getYCoordinate() - halfSizeOther);
+		if(this instanceof PlayerRobot) {
+			halfSizeThis=halfSizeThis + 1 - 1;
+		}
+		if((rightX1 < leftX2) || (leftX1 > rightX2)) {} // no left/right overlap
+		else if((topY2 < bottomY1) || (topY1 < bottomY2)) {} // no top/bottom overlap
+		else isCollision = true; // something overlapped
+		
+		// if there's a collision, and it's not in the list yet, add it to the list
+		if(isCollision && !(isCollidingWith.contains(otherObject))) {
+			isCollidingWith.add(otherObject);
+		}
+				
+		// if there is no collision, but it's in the list, remove it from list
+		else if(!isCollision && (isCollidingWith.contains(otherObject))){
+			isCollidingWith.remove(otherObject);
+		}
+				
+		// if it's colliding, but it's already in the list, ignore it
+		else if(isCollision && isCollidingWith.contains(otherObject)) {
+			isCollision = false;
+		}
+				
 		
 		return isCollision;
 	}

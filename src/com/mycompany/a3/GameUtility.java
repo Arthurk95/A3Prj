@@ -96,17 +96,17 @@ public class GameUtility {
 		
 		int headingToTarget;
 		// x1,y1 IS CENTER OF GRAPH
-		if((targetX > x1) && (targetY < y1)) { // quadrant 2
+		if((targetX > x1) && (targetY > y1)) { // quadrant 2
 			headingToTarget = 180 - angleFromPole;
 		}
-		else if((targetX < x1) && (targetY < y1)) { // quadrant 3
+		else if((targetX < x1) && (targetY > y1)) { // quadrant 3
 			headingToTarget = angleFromPole + 180;
 		}
-		else if ((targetX < x1) && (targetY > y1)) { // quadrant 4
+		else if ((targetX < x1) && (targetY < y1)) { // quadrant 4
 			headingToTarget = 360 - angleFromPole;
 		}
 		else headingToTarget = angleFromPole; // quadrant 1
-		return headingToTarget;
+		return headingToTarget + 180;
 	}
 	
 	// Private inner class to store the X/Y game size

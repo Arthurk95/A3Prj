@@ -173,11 +173,10 @@ public class GameWorld extends Observable {
 			if (checkIfLifeLost())
 				break;	
 		}
+		checkForCollisions();
 		gameClock++;
 		notifyObservers();
 		checkIfGameOver();
-		System.out.println("\n---------------------------------------------------------");
-		System.out.println("Game successfully progressed 1 tick\n");
 	}
 	
 	/* It only matters if a Robot is colliding with something, so this goes
@@ -187,7 +186,6 @@ public class GameWorld extends Observable {
 		IIterator allObjects = objectsCollection.getIterator();
 		while (allObjects.hasNext()) {
 			GameObject currentObject = (GameObject)allObjects.getNext();
-			
 			if(currentObject instanceof Robot) {
 				Robot currentRobot = (Robot)currentObject;
 				IIterator otherObjects = objectsCollection.getIterator();
@@ -198,6 +196,7 @@ public class GameWorld extends Observable {
 					else if(currentRobot.collidesWith(currentOtherObject) &&
 							currentOtherObject.collidesWith(currentRobot)) {
 						currentRobot.handleCollision(currentOtherObject);
+						notifyObservers();
 					}
 				}
 			}
