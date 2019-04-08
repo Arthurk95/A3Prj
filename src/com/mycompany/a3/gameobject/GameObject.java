@@ -55,9 +55,7 @@ public abstract class GameObject implements IDrawable, ICollider{
 		int leftX2 = (int)(otherObject.getXCoordinate() - halfSizeOther);
 		int topY2 = (int)(otherObject.getYCoordinate() + halfSizeOther);
 		int bottomY2 = (int)(otherObject.getYCoordinate() - halfSizeOther);
-		if(this instanceof PlayerRobot) {
-			halfSizeThis=halfSizeThis + 1 - 1;
-		}
+
 		if((rightX1 < leftX2) || (leftX1 > rightX2)) {} // no left/right overlap
 		else if((topY2 < bottomY1) || (topY1 < bottomY2)) {} // no top/bottom overlap
 		else isCollision = true; // something overlapped

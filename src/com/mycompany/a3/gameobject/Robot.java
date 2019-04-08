@@ -27,7 +27,7 @@ public class Robot extends Movable implements ISteerable{
 	private int steeringDirection = 0;
 	private int maximumSpeed = GameUtility.MAX_SPEED;
 	private float energyLevel = 100;
-	private float energyConsumptionRate = 1;
+	private float energyConsumptionRate = 2;
 	private int damageLevel = 0;
 	private int MAX_DAMAGE = 100;
 	private int lastBaseReached = 1;
@@ -187,11 +187,18 @@ public class Robot extends Movable implements ISteerable{
 		else if (steeringDirection < GameUtility.MAX_STEER_LEFT)
 			steeringDirection = GameUtility.MAX_STEER_LEFT;
 		
+		
 		if (steeringDirection != 0) {
-			newHeading = getHeading() + steeringDirection;
-			if(steeringDirection > 0)
+			newHeading = getHeading();
+			if(steeringDirection > 0) {
 				steeringDirection--;
-			else steeringDirection++;
+				newHeading++;
+			}
+			else {
+				steeringDirection++;
+				newHeading--;
+			}
+			
 			
 			if (newHeading < 0) {
 				newHeading += 360;
