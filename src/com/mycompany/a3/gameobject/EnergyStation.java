@@ -9,6 +9,8 @@ package com.mycompany.a3.gameobject;
 import java.util.Random;
 
 import com.codename1.ui.geom.Point;
+import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Font;
 import com.codename1.ui.Graphics;
 
 /* Fixed GameObject.
@@ -22,7 +24,7 @@ public class EnergyStation extends Fixed{
 	
 	public EnergyStation(float x, float y, int[] color, int size){
 		super(x, y, color, size); // initial values passed to Fixed
-		capacity = getSize()/3;
+		capacity = getSize()/4;
 	}
 
 	/* Fades the color of the EnergyStation by half its RGB value 
@@ -48,11 +50,21 @@ public class EnergyStation extends Fixed{
 	}
 	
 	public void draw(Graphics g, Point pCmpRelPrnt) {
+		int halfSize = getSize()/2;
 		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
 		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
+		
+		int xCorner = centerX - halfSize;
+		int yCorner = centerY - halfSize;
+
+		// draw filled circle
 		g.setColor(this.getColorAsInt());
-		g.drawArc(centerX, centerY, this.getSize(), this.getSize(), 0, 360);
-		g.drawString(String.valueOf(capacity), centerX, centerY);
+		g.fillArc(xCorner, yCorner, this.getSize(), this.getSize(), 0, 360);
+		// draw capacity size in center of circle
+		g.setFont(Font.createTrueTypeFont("native:MainRegular").
+                derive(halfSize, Font.STYLE_PLAIN));
+		g.setColor(ColorUtil.WHITE);
+		g.drawString(String.valueOf(capacity), centerX - (halfSize/2), centerY - (halfSize/2));
 	}
 	
 	public int getCapacity() {return capacity;}

@@ -27,12 +27,12 @@ public class Drone extends Movable{
 	/* Adds a random number between -5 and 5 to the heading.
 	 * Calls the parent move() method. Checks if the new location is valid.
 	 * Fixes the location if invalid */
-	public void move() {
+	public void move(int tickRate) {
 		setHeading(getHeading() + GameUtility.randomInt(-5, 5));
 		float oldX = getXCoordinate();
 		float oldY = getYCoordinate();
 		
-		super.move();
+		super.move(tickRate);
 		
 		/* If the new location is invalid, the Drone moves
 		 * one by one from its old x/y coordinates to the new(invalid) x/y

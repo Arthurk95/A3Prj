@@ -29,18 +29,23 @@ public class NonPlayerRobot extends Robot{
 		currentStrategy.apply();
 	}
 	
-	public void move() {
+	public void move(int tickRate) {
 		invokeStrategy();
-		super.move();
+		super.move(tickRate);
 		super.resetSteering();
 		energyLevel = GameUtility.NPR_ENERGY_LEVEL; // never runs out of energy
 	}
 
 	public void draw(Graphics g, Point pCmpRelPrnt) {
+		int halfSize = getSize()/2;
 		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
 		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
+		
+		int xCorner = centerX - halfSize;
+		int yCorner = centerY - halfSize;
+		
 		g.setColor(this.getColorAsInt());
-		g.drawRect(centerX, centerY, this.getSize(), this.getSize());
+		g.drawRect(xCorner, yCorner, this.getSize(), this.getSize());
 	}
 	
 	public String toString() {

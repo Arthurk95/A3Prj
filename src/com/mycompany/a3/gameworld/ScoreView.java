@@ -52,7 +52,7 @@ public class ScoreView extends Container implements Observer{
 		livesLeft.setText(String.valueOf(gw.getLivesRemaining()));
 		gameTime.setText(String.valueOf(gw.getGameTime()));
 		lastBaseReached.setText(String.valueOf(PlayerRobot.getPlayerRobot().getLastBaseReached()));
-		energy.setText(String.valueOf(PlayerRobot.getPlayerRobot().getEnergy()));
+		energy.setText(String.valueOf((int)PlayerRobot.getPlayerRobot().getEnergy()));
 		damageLevel.setText(String.valueOf(PlayerRobot.getPlayerRobot().getDamage()));
 		if(gw.isSoundOn())
 			sound.setText("ON");

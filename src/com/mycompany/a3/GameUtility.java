@@ -21,22 +21,26 @@ public class GameUtility {
 	public static final int STEER_AMOUNT = 5;
 	public static final int MAX_STEER_LEFT = -40;
 	public static final int MAX_STEER_RIGHT = 40;
-	public static final int MAX_STATION_SIZE = 60;
-	public static final int MIN_STATION_SIZE = 40;
+	public static final int MAX_STATION_SIZE = 100;
+	public static final int MIN_STATION_SIZE = 60;
 	public static final int COLLISION_DAMAGE = 10;
 	public static final int NUM_DRONES = randomInt(2, 5);
-	public static final int BASE_SIZE = 80;
-	public static final float START_X = 800;
-	public static final float START_Y = 40;
+	public static final int BASE_SIZE = 100;
 	public static final int ROBOT_SIZE = 60;
-	public static final int[] BASE_COLOR = {000,200,200}; // GREEN
-	public static final int[] ROBOT_COLOR = {150,000,255}; // BLUE
-	public static final int[] DRONE_COLOR = {255,100,000}; // RED
-	public static final int[] ENERGYSTATION_COLOR = {000,150,150}; // TURQUOISE I THINK
+	public static final int[] BASE_COLOR = {0,120,20}; // DARK GREEN
+	public static final int[] ROBOT_COLOR = {000,100,205}; // BLUE
+	public static final int[] NPR_COLOR = {150,000,000}; // RED
+	public static final int[] DRONE_COLOR = {155,000,155}; // RED
+	public static final int[] ENERGYSTATION_COLOR = {140,130,000}; // YELLOWISH I THINK
 	public static final int NPR_ENERGY_LEVEL = 200;
+	public static final int TICK_RATE = 20; // in ms
 
 	public static int gameSizeX() { return GameSize.x; }
 	public static int gameSizeY() { return GameSize.y; }
+	
+	/* Sets starting location to upper right corner */
+	public static int startX() {return gameSizeX() - 200;}
+	public static int startY() {return gameSizeY() / 12;}
 	
 	// Can ONLY be changed if GameSize.x/GameSize.y haven't been changed
 	public static void setGameSize(int x, int y) {

@@ -21,7 +21,7 @@ import com.codename1.charts.util.ColorUtil;
  * 
  * location - Location object that stores the float x and y coordinates of the GameObject
  */
-public abstract class GameObject implements IDrawable{
+public abstract class GameObject implements IDrawable, ICollider{
 	private int size;
 	private int[] color = new int[3]; // RGB color
 	private ColorUtil colorCU = new ColorUtil();
@@ -37,6 +37,10 @@ public abstract class GameObject implements IDrawable{
 		this.color = colr;
 		setColorCU();
 	}
+	
+	public boolean collidesWith(GameObject otherObject) { return false; }
+	
+	public void handleCollision(GameObject otherObject) {}
 	
 	// Sets the RGB colors of the ColorUtil object
 	private void setColorCU() {colorCU.rgb(color[0], color[1], color[2]);}

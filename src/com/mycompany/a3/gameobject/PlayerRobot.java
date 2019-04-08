@@ -21,7 +21,7 @@ public class PlayerRobot extends Robot{
 	private static PlayerRobot playerRobot;
 	
 	private PlayerRobot() {
-		super(GameUtility.START_X, GameUtility.START_Y, 
+		super(GameUtility.startX(), GameUtility.startY(), 
 				GameUtility.ROBOT_COLOR, GameUtility.ROBOT_SIZE); // initial values passed to Movable
 	}
 	
@@ -59,10 +59,15 @@ public class PlayerRobot extends Robot{
 	}
 	
 	public void draw(Graphics g, Point pCmpRelPrnt) {
+		int halfSize = getSize()/2;
 		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
 		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
+		
+		int xCorner = centerX - halfSize;
+		int yCorner = centerY - halfSize;
+
 		g.setColor(this.getColorAsInt());
-		g.fillRect(centerX, centerY, this.getSize(), this.getSize());
+		g.fillRect(xCorner, yCorner, this.getSize(), this.getSize());
 	}
 	
 	public String toString() {

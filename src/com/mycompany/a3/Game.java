@@ -10,6 +10,7 @@ package com.mycompany.a3;
 import com.codename1.ui.layouts.BorderLayout;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
+import com.codename1.ui.util.UITimer;
 import com.mycompany.a3.commands.*;
 import com.mycompany.a3.gameworld.GameWorld;
 import com.mycompany.a3.gameworld.MapView;
@@ -26,11 +27,12 @@ import com.codename1.ui.Form;
 /* Controller class for GameWorld. 
  * Initializes a GameWorld and the BorderLayout UI.
  * Creates commands to perform in-game actions within the GameWorld */
-public class Game extends Form{
+public class Game extends Form implements Runnable{
 	
 	private GameWorld gameWorld;
 	private MapView mapView;
 	private ScoreView scoreView;
+	private UITimer timer;
 	private CMDCollisionNPR collisionNPRCMD;
 	private CMDCollisionDrone collisionDroneCMD;
 	private CMDCollisionStation collisionStationCMD;
@@ -39,12 +41,12 @@ public class Game extends Form{
 	private CMDBrake brakeCMD ;
 	private CMDTurnLeft turnLeftCMD;
 	private CMDTurnRight turnRightCMD;
-	private CMDTick tickCMD;
 	private CMDStrategies strategiesCMD;
 	private CMDExit exitCMD;
 	private CMDSound soundCMD;
 	private CMDAboutInfo aboutInfoCMD;
 	private CMDHelp helpCMD;
+	private CMDPause pauseCMD;
 	
 	public Game() {
 		gameWorld = new GameWorld();
@@ -53,6 +55,7 @@ public class Game extends Form{
 		gameWorld.addObserver(mapView);
 		gameWorld.addObserver(scoreView);
 		this.setLayout(new BorderLayout());
+		timer = new UITimer(this);
 		initCommands();
 
 		makeToolbar();
@@ -65,6 +68,13 @@ public class Game extends Form{
 		this.show();
 		GameUtility.setGameSize(mapView.getWidth(), mapView.getHeight());
 		gameWorld.init();
+		
+		
+		timer.schedule(GameUtility.TICK_RATE, true, this);
+	}
+	
+	public void run() {
+		gameWorld.clockTick();
 	}
 	
 	/* Creates the Toolbar for this with a SideMenu, a title,
@@ -117,7 +127,8 @@ public class Game extends Form{
 		bottomPanel.add(newButton(collisionDroneCMD, 'g'));
 		bottomPanel.add(newButton(collisionStationCMD, 'e'));
 		bottomPanel.add(newButton(collisionBaseCMD, (char)0));
-
+		bottomPanel.add(newButton(pauseCMD, (char) 0));
+		
 		bottomPanel.getAllStyles().setMargin(Component.BOTTOM, 5);
 		bottomPanel.getAllStyles().setMargin(Component.TOP, 5);
 		bottomPanel.getAllStyles().setPadding(Component.RIGHT, 4);
@@ -129,7 +140,6 @@ public class Game extends Form{
 	private Container makeRightColumn() {
 		Container rightColumn = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 		
-		rightColumn.add(newButton(tickCMD, 't'));
 		rightColumn.add(newButton(strategiesCMD, (char)0));
 		return rightColumn;
 	}
@@ -154,11 +164,11 @@ public class Game extends Form{
 		brakeCMD = new CMDBrake(gameWorld);
 		turnLeftCMD = new CMDTurnLeft(gameWorld);
 		turnRightCMD = new CMDTurnRight(gameWorld);
-		tickCMD = new CMDTick(gameWorld);
 		strategiesCMD = new CMDStrategies(gameWorld);
 		exitCMD = new CMDExit();
 		soundCMD = new CMDSound(gameWorld);
 		helpCMD = new CMDHelp();
 		aboutInfoCMD = new CMDAboutInfo();
+		pauseCMD = new CMDPause(this, timer);
 	}
 }

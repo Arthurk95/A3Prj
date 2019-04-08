@@ -8,6 +8,7 @@
 package com.mycompany.a3.gameobject;
 
 import com.codename1.ui.geom.Point;
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 
 /* Fixed GameObject.
@@ -53,7 +54,8 @@ public class Base extends Fixed{
 
 		g.setColor(this.getColorAsInt());
 		g.fillPolygon(xPoints, yPoints, 3);
-		g.drawString(String.valueOf(sequenceNumber), centerX, centerY);
+		g.setColor(ColorUtil.WHITE);
+		g.drawString(String.valueOf(sequenceNumber), centerX - (halfSize/6), centerY - (halfSize/2));
 	}
 	
 	public String toString() {

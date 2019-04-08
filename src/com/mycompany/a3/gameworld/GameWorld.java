@@ -50,11 +50,11 @@ public class GameWorld extends Observable {
 	 * The PLAYER Robot is ALWAYS at index 0 in the allObjects list */
 	public void init() {
 		objectsCollection = new GameObjectCollection();
-		createRobot();
-		createNPRs();
 		createBases();
 		createEnergyStations();	
 		createDrones();
+		createNPRs();
+		createRobot();
 		changeNPRStrategies();
 		notifyObservers();
 	}
@@ -98,9 +98,9 @@ public class GameWorld extends Observable {
 	/* Creates 3 NonPlayerRobots around the Robot's starting location */
 	private void createNPRs() {
 		int size = GameUtility.ROBOT_SIZE;
-		createNPR(GameUtility.START_X + (size*2), GameUtility.START_Y, GameUtility.ROBOT_COLOR, size);
-		createNPR(GameUtility.START_X - (size), GameUtility.START_Y + (size), GameUtility.ROBOT_COLOR, size);
-		createNPR(GameUtility.START_X - (size), GameUtility.START_Y - (size), GameUtility.ROBOT_COLOR, size);
+		createNPR(GameUtility.startX() + (size*4), GameUtility.startY() + (size), GameUtility.NPR_COLOR, size);
+		createNPR(GameUtility.startX() - (size*2), GameUtility.startY() + (size*4), GameUtility.NPR_COLOR, size);
+		createNPR(GameUtility.startX() - (size*3), GameUtility.startY(), GameUtility.NPR_COLOR, size);
 	}
 	
 	private void createNPR(float startingX, float startingY, int[] color, int size) {
@@ -108,13 +108,15 @@ public class GameWorld extends Observable {
 		notifyObservers();
 	}
 	
-	/* Creates 5 bases with locations chosen by me */
+	/* Creates 5 bases with locations chosen by me 
+	 * Map zig zags to the top of the gameworld, then goes straight down
+	 * for the final base. */
 	private void createBases() {
-		createBase(GameUtility.START_X, GameUtility.START_Y, 1);
-		createBase(150, 400, 2);
-		createBase(450, 300, 3);
-		createBase(500, 200, 4);
-		createBase(950, 600, 5);
+		createBase(GameUtility.startX(), GameUtility.startY(), 1);
+		createBase(GameUtility.gameSizeX() / 8, GameUtility.gameSizeY() / 3, 2);
+		createBase(GameUtility.gameSizeX() - 400, GameUtility.gameSizeY() / 2, 3);
+		createBase(GameUtility.gameSizeX()/2, (int)(GameUtility.gameSizeY() * 0.8), 4);
+		createBase(GameUtility.gameSizeX()/2, GameUtility.gameSizeY()/10, 5);
 	}
 	
 	/* Creates a single Base and adds it to the allObjects list */
@@ -165,7 +167,7 @@ public class GameWorld extends Observable {
 			GameObject currentObject = (GameObject)allObjects.getNext();
 			if (currentObject instanceof Movable) {
 				Movable m = (Movable)currentObject;
-				m.move(); // Calls the Movable CHILD's move() method
+				m.move(GameUtility.TICK_RATE); // Calls the Movable CHILD's move() method
 				notifyObservers();
 			}
 			if (checkIfLifeLost())

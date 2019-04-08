@@ -14,7 +14,6 @@ import com.mycompany.a3.GameUtility;
  * The location of a Movable object is changed based on
  * its speed and heading. */
 public abstract class Movable extends GameObject{
-	
 	public Movable() {}
 	
 	public Movable(float x, float y, int[] color, int size) {
@@ -27,11 +26,11 @@ public abstract class Movable extends GameObject{
 	/* Tells the object to move by determining its new coordinates
 	 * based on its heading and speed.
 	 * Makes sure it stays within the GameWorld */
-	public void move() {
+	public void move(int tickRate) {
 		float newX, newY;
 		double theta = Math.toRadians(90-heading);
-		newX = getXCoordinate() + (float)(Math.cos(theta))*getSpeed();
-		newY = getYCoordinate() + (float)(Math.sin(theta))*getSpeed();
+		newX = getXCoordinate() + (float)(((Math.cos(theta))*getSpeed()) / tickRate);
+		newY = getYCoordinate() + (float)(((Math.sin(theta))*getSpeed()) / tickRate);
 		setLocation(newX, newY);
 	}
 	

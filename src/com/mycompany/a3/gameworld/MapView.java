@@ -11,6 +11,7 @@ import com.codename1.ui.geom.Point;
 import com.codename1.ui.plaf.Border;
 import com.mycompany.a3.GameUtility;
 import com.mycompany.a3.gameobject.GameObject;
+import com.mycompany.a3.gameobject.PlayerRobot;
 import com.mycompany.a3.objectcollection.GameObjectCollection;
 import com.mycompany.a3.objectcollection.IIterator;
 
@@ -26,7 +27,6 @@ public class MapView extends Container implements Observer{
 		// red border
 		this.getAllStyles().setBorder(Border.createLineBorder(1, ColorUtil.rgb(255, 0, 0)));
 		System.out.println(gw.outputGameMap());
-		System.out.println("WIDTH: " + GameUtility.gameSizeX() + " | HEIGHT: " + GameUtility.gameSizeY());
 		drawWorld();
 	}
 

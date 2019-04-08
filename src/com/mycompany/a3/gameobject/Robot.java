@@ -23,8 +23,8 @@ import com.mycompany.a3.GameUtility;
 public class Robot extends Movable implements ISteerable{
 	private int steeringDirection = 0;
 	private int maximumSpeed = GameUtility.MAX_SPEED;
-	private int energyLevel = 100;
-	private int energyConsumptionRate = 10;
+	private float energyLevel = 100;
+	private float energyConsumptionRate = 4;
 	private int damageLevel = 0;
 	private int MAX_DAMAGE = 100;
 	private int lastBaseReached = 1;
@@ -39,11 +39,11 @@ public class Robot extends Movable implements ISteerable{
 	/* Checks to make sure the speed is valid and
 	* updates the heading based on steeringDirection
 	* before calling the parent move() method. */
-	public void move() {
+	public void move(int tickRate) {
 		checkSpeed();
 		updateHeading();
-		super.move();
-		energyLevel = energyLevel - energyConsumptionRate;
+		super.move(tickRate);
+		energyLevel = energyLevel - (energyConsumptionRate/tickRate);
 	}
 	
 	/* Makes sure the speed is within a valid range
@@ -94,7 +94,7 @@ public class Robot extends Movable implements ISteerable{
 	}
 	
 	public int getDamage() {return damageLevel;}
-	public int getEnergy() {return energyLevel;}
+	public float getEnergy() {return energyLevel;}
 	public int getLastBaseReached() {return lastBaseReached;}
 	
 	public boolean canSteerLeft() {
@@ -167,19 +167,37 @@ public class Robot extends Movable implements ISteerable{
 	/* Adds the steeringDirection to the Robot's heading,
 	 * and makes sure the heading is still between 0 and 360 */
 	public void updateHeading() {
+		int newHeading;
 		if (steeringDirection > GameUtility.MAX_STEER_RIGHT)
 			steeringDirection = GameUtility.MAX_STEER_RIGHT;
 		else if (steeringDirection < GameUtility.MAX_STEER_LEFT)
 			steeringDirection = GameUtility.MAX_STEER_LEFT;
 		
-		int newHeading = getHeading() + steeringDirection;
-		if (newHeading < 0) {
-			newHeading += 360;
+		if (steeringDirection != 0) {
+			newHeading = getHeading() + steeringDirection;
+			if(steeringDirection > 0)
+				steeringDirection--;
+			else steeringDirection++;
+			
+			if (newHeading < 0) {
+				newHeading += 360;
+			}
+			else if (newHeading > 359) {
+				newHeading -= 360;
+			}
+			setHeading(newHeading);
 		}
-		else if (newHeading > 359) {
-			newHeading -= 360;
-		}
-		setHeading(newHeading);
+		
+		
+	}
+	
+	public boolean collidesWith(GameObject otherObject) {
+		
+		return false;
+	}
+	
+	public void handleCollision(GameObject otherObject) {
+		
 	}
 	
 	/* Adds stationCapacity to the Robot's energyLevel, up to 100 */
@@ -205,7 +223,7 @@ public class Robot extends Movable implements ISteerable{
 	
 	public String toString() {
 		String parentDesc = super.toString();
-		String thisDesc = " energyLevel=" + energyLevel + " damageLevel=" + damageLevel;
+		String thisDesc = " energyLevel=" + (int)energyLevel + " damageLevel=" + damageLevel;
 		return parentDesc + thisDesc;
 	}
 }
