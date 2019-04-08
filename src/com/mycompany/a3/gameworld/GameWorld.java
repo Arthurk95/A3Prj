@@ -180,6 +180,30 @@ public class GameWorld extends Observable {
 		System.out.println("Game successfully progressed 1 tick\n");
 	}
 	
+	/* It only matters if a Robot is colliding with something, so this goes
+	 * through the list of objects and only checks each Robot against every
+	 * other object in the list. */
+	private void checkForCollisions() {
+		IIterator allObjects = objectsCollection.getIterator();
+		while (allObjects.hasNext()) {
+			GameObject currentObject = (GameObject)allObjects.getNext();
+			
+			if(currentObject instanceof Robot) {
+				Robot currentRobot = (Robot)currentObject;
+				IIterator otherObjects = objectsCollection.getIterator();
+				
+				while (otherObjects.hasNext()) {
+					GameObject currentOtherObject = (GameObject)otherObjects.getNext();
+					if (currentRobot == currentOtherObject) {} // do nothing
+					else if(currentRobot.collidesWith(currentOtherObject) &&
+							currentOtherObject.collidesWith(currentRobot)) {
+						currentRobot.handleCollision(currentOtherObject);
+					}
+				}
+			}
+		}
+	}
+	
 	/* Returns true if player Robot has take too much damage
 	 * or run out of energy */
 	private boolean checkIfLifeLost() {

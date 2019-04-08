@@ -38,7 +38,28 @@ public abstract class GameObject implements IDrawable, ICollider{
 		setColorCU();
 	}
 	
-	public boolean collidesWith(GameObject otherObject) { return false; }
+	public boolean collidesWith(GameObject otherObject) { 
+		int halfSize = getSize()/2;
+		boolean isCollision = false;
+		
+		int rightX1 = (int)(otherObject.getXCoordinate() + halfSize);
+		int leftX1 = (int)(otherObject.getXCoordinate() - halfSize);
+		int topY1 = (int)(otherObject.getYCoordinate() - halfSize);
+		int bottomY1 = (int)(otherObject.getYCoordinate() + halfSize);
+			
+		int rightX2 = (int)(otherObject.getXCoordinate() + halfSize);
+		int leftX2 = (int)(otherObject.getXCoordinate() - halfSize);
+		int topY2 = (int)(otherObject.getYCoordinate() - halfSize);
+		int bottomY2 = (int)(otherObject.getYCoordinate() + halfSize);
+			
+		if((rightX1 < leftX2) || (leftX1 > rightX2)) {}
+		else 
+			if((topY2 < bottomY1) || (topY1 < bottomY2)) {}
+		else 
+			isCollision = true;
+		
+		return isCollision;
+	}
 	
 	public void handleCollision(GameObject otherObject) {}
 	
