@@ -14,7 +14,7 @@ public class DroneStrategy implements Strategy{
 	/* Randomly steers the NPR up to 15 in either direction, 
 	 * steering the robot one degree per tick */
 	public void apply() {
-		int randomNum = GameUtility.randomInt(1, 4);
+		int randomNum = GameUtility.randomInt(1, 7);
 		if((headingIncrement == 0) && (randomNum == 2)) {
 			headingIncrement = GameUtility.randomInt(-15, 15);
 			while(headingIncrement == 0)

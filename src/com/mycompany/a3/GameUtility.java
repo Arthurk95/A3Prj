@@ -56,6 +56,12 @@ public class GameUtility {
 		while (randomInt < min) {
 			randomInt = rand.nextInt(max);
 		}
+		
+		if(min < 0) {
+			if(rand.nextInt(3) == 2) {
+				randomInt -= randomInt*2;
+			}
+		}
 		return randomInt;
 	}
 	
@@ -64,6 +70,11 @@ public class GameUtility {
 		float randomFloat = rand.nextFloat() * max;
 		while (randomFloat < min) {
 			randomFloat = rand.nextFloat() * max;
+		}
+		if(min < 0) {
+			if((rand.nextFloat() * 3) == 2) {
+				randomFloat -= randomFloat*2;
+			}
 		}
 		return randomFloat;
 	}
