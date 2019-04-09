@@ -18,7 +18,7 @@ public class GameUtility {
 	public static final int INITIAL_ENERGY_STATIONS = 5;
 	public static final int MAX_SPEED = 100;
 	public static final int NUM_BASES = 5;
-	public static final int STEER_AMOUNT = 15;
+	public static final int STEER_AMOUNT = 10;
 	public static final int MAX_STEER_LEFT = -40;
 	public static final int MAX_STEER_RIGHT = 40;
 	public static final int MAX_STATION_SIZE = 100;
@@ -96,10 +96,11 @@ public class GameUtility {
 		
 		int headingToTarget;
 		// x1,y1 IS CENTER OF GRAPH
-		// Because of the rotated map, quadrant 1 is now where
-		// quadrant 2 was. The heading starts at 0 at the bottom
-		// Y axis (negative axis if this graph were normal)
-		// and rotates counter-clockwise up to 360.
+		
+		// NOTE: Because of the rotated map, quadrant 1 is now where
+		// 		 quadrant 2 was. The heading starts at 0 at the bottom
+		// 		 Y axis (negative axis if this graph were normal)
+		// 		 and rotates counter-clockwise up to 360.
 		if((targetX > x1) && (targetY < y1)) { // quadrant 2
 			headingToTarget = 180 - angleFromPole;
 		}
