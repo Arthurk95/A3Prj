@@ -69,9 +69,11 @@ public class EnergyStation extends Fixed{
 	
 	public int getCapacity() {return capacity;}
 	
-	public void collisionWithPlayer() {
-		capacity = 0;
-		fadeColor();
+	public void collisionWithRobot() {
+		if(capacity != 0) {
+			capacity = 0;
+			fadeColor();
+		}
 	}
 	
 	public String toString() {
