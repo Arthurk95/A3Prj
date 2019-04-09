@@ -34,7 +34,7 @@ public class Robot extends Movable implements ISteerable{
 
 	public Robot(float startingX, float startingY, int[] color, int size) {
 		super(startingX, startingY, color, size); // initial values passed to Movable
-		setSpeed(20);
+		setSpeed(40);
 		setHeading(0);
 		damageLevel = 0;
 	}

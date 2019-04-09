@@ -323,7 +323,7 @@ public class GameWorld extends Observable {
 				else {
 					PlayerRobot.getPlayerRobot().collisionWithEnergyStation(e.getCapacity());
 					notifyObservers();
-					e.collisionWithPlayer();
+					e.collisionWithRobot();
 					notifyObservers();
 					createEnergyStation();
 					System.out.println("Collided with EnergyStation of size " + e.getSize());
