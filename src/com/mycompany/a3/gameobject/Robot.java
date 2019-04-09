@@ -215,7 +215,7 @@ public class Robot extends Movable implements ISteerable{
 	public void handleCollision(GameObject otherObject) {
 		if (otherObject instanceof EnergyStation) {
 			collisionWithEnergyStation(((EnergyStation)otherObject).getCapacity());
-			((EnergyStation)otherObject).collisionWithPlayer();
+			((EnergyStation)otherObject).collisionWithRobot();
 		}
 		else if (otherObject instanceof Base) {
 			updateLastBase(((Base)otherObject).getSequenceOrder());
