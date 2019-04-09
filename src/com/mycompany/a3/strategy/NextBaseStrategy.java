@@ -78,35 +78,41 @@ public class NextBaseStrategy implements Strategy{
 	
 	/* Turns the NPR left or right, depending on the targetHeading, 
 	 * until either it can no longer turn or it has reached the new heading. 
-	 * Fixes over-steer. 
-	 * Turns it 5 at a time, to future proof for when actual time 
-	 * is implemented. Now, the NPR will turn left/right 40 at a time per
-	 * tick until it reaches the targetHeading */
+	 * Fixes over-steer */
 	public void calculateNewTarget(int targetHeading) {
 		headingToTarget = makeValidHeadingValue(targetHeading);
 		int currentHeading = nonPlayerRobot.getHeading();
 		
-		int difference = findDifference(headingToTarget, currentHeading);
+		int difference = headingToTarget - currentHeading;
 		
-		if (currentHeading == targetHeading) {} // do nothing
-		else {
-			if (makeValidHeadingValue((currentHeading + 180)) > headingToTarget) {
-				while(nonPlayerRobot.canSteerRight() && (difference > 0)) {
-					nonPlayerRobot.steerRight();
-					difference -= GameUtility.STEER_AMOUNT;
-				}
-				if (difference < 0) { // account for oversteer
-					nonPlayerRobot.steerLeft(Math.abs(difference));
-				}
+		/* (-180 < difference < 0) OR (difference > 180) 
+		 * Robot needs to turn LEFT to get to target */
+		if(((difference < 0) && (difference > -180)) || (difference > 180)) {
+			
+			if(difference > 180) {
+				difference = makeValidHeadingValue(difference + 180);
 			}
-			else {
-				while(nonPlayerRobot.canSteerLeft() && (difference > 0)) {
-					nonPlayerRobot.steerLeft();
-					difference -= GameUtility.STEER_AMOUNT;
-				}
-				if (difference < 0) { // account for oversteer
-					nonPlayerRobot.steerRight(Math.abs(difference));
-				}
+			else difference = Math.abs(difference);
+			
+			while(nonPlayerRobot.canSteerLeft() && (difference > 0)) {
+				nonPlayerRobot.steerLeft();
+				difference -= GameUtility.STEER_AMOUNT;
+			}
+			if (difference < 0) { // account for over-steer
+				nonPlayerRobot.steerRight(Math.abs(difference));
+			}
+		}
+		/* (0 < difference < 180) OR (difference < -180) 
+		 * Robot needs to turn RIGHT to get to target */
+		else {
+			if(difference < -180)
+				difference = difference + 360;
+			while(nonPlayerRobot.canSteerRight() && (difference > 0)) {
+				nonPlayerRobot.steerRight();
+				difference -= GameUtility.STEER_AMOUNT;
+			}
+			if (difference < 0) { // account for over-steer
+				nonPlayerRobot.steerLeft(Math.abs(difference));
 			}
 		}
 	}
@@ -120,34 +126,6 @@ public class NextBaseStrategy implements Strategy{
 			value -= 360;
 		}
 		return value;
-	}
-	
-	/* Returns the difference between the two passed headings
-	 * based on the smallest distance between the two angles 
-	 * IE. 	if targetHeading = 340 and currentHeading = 10 
-	 * 		returns 30, not 330 */
-	private int findDifference(int targetHeading, int currentHeading) {
-		int difference = 0;
-		int iterator;
-
-		// decides if it's closer to add or subtract 1 from currentHeading
-		if (targetHeading > makeValidHeadingValue(currentHeading + 180))
-			iterator = -1;
-		else iterator = 1;
-		
-		// increments currentHeading until it's equal to targetHeading
-		while(currentHeading != targetHeading) {
-			currentHeading = currentHeading + iterator;
-			difference++;
-			if ((currentHeading == targetHeading) || (difference > 359))
-				break;
-			if (currentHeading < 0)
-				currentHeading = 359;
-			else if (currentHeading > 360) {
-				currentHeading = 1;
-			}
-		}
-		return difference;
 	}
 	
 	public String toString() {

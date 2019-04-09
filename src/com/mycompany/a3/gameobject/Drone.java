@@ -18,6 +18,8 @@ import com.mycompany.a3.GameUtility;
  * Color can't be changed after initialization.
  */
 public class Drone extends Movable{
+	private int headingIncrement = 0;
+	
 	public Drone(float x, float y, int[] color, int size) {
 		super(x, y, color, size); // initial values passed to Movable
 		setHeading(GameUtility.randomInt(0, 360));
@@ -28,7 +30,22 @@ public class Drone extends Movable{
 	 * Calls the parent move() method. Checks if the new location is valid.
 	 * Fixes the location if invalid */
 	public void move(int tickRate) {
-		setHeading(getHeading() + GameUtility.randomInt(-5, 5));
+		int randomNum = GameUtility.randomInt(1, 10);
+		if((headingIncrement == 0) && (randomNum == 5)) {
+			headingIncrement = GameUtility.randomInt(-15, 15);
+			while(headingIncrement == 0)
+				headingIncrement = GameUtility.randomInt(-15, 15);
+		}
+		
+		if(headingIncrement < 0) { // turn left
+			setHeading(getHeading() - 1);
+			headingIncrement++;
+
+		}
+		else if(headingIncrement > 0) { // turn right
+			setHeading(getHeading() + 1);
+			headingIncrement--;
+		}
 		float oldX = getXCoordinate();
 		float oldY = getYCoordinate();
 		

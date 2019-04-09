@@ -98,7 +98,7 @@ public class GameWorld extends Observable {
 	/* Creates 3 NonPlayerRobots around the Robot's starting location */
 	private void createNPRs() {
 		int size = GameUtility.ROBOT_SIZE;
-		createNPR(GameUtility.startX() + (size*4), GameUtility.startY() + (size), GameUtility.NPR_COLOR, size);
+		createNPR(GameUtility.startX() + (size*2), GameUtility.startY() + (size), GameUtility.NPR_COLOR, size);
 		createNPR(GameUtility.startX() - (size*2), GameUtility.startY() + (size*4), GameUtility.NPR_COLOR, size);
 		createNPR(GameUtility.startX() - (size*3), GameUtility.startY(), GameUtility.NPR_COLOR, size);
 	}
@@ -181,7 +181,8 @@ public class GameWorld extends Observable {
 	
 	/* It only matters if a Robot is colliding with something, so this goes
 	 * through the list of objects and only checks each Robot against every
-	 * other object in the list. */
+	 * other object in the list. If the other object is an EnergyStation, 
+	 * creates a new one if the current one is not empty */
 	private void checkForCollisions() {
 		IIterator allObjects = objectsCollection.getIterator();
 		while (allObjects.hasNext()) {
@@ -195,6 +196,10 @@ public class GameWorld extends Observable {
 					if (currentRobot == currentOtherObject) {} // do nothing
 					else if(currentRobot.collidesWith(currentOtherObject) &&
 							currentOtherObject.collidesWith(currentRobot)) {
+						if ((currentOtherObject instanceof EnergyStation) && 
+								(((EnergyStation)currentOtherObject).getCapacity() != 0)) {
+							createEnergyStation();
+						}
 						currentRobot.handleCollision(currentOtherObject);
 						notifyObservers();
 					}

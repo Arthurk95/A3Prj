@@ -191,12 +191,12 @@ public class Robot extends Movable implements ISteerable{
 		if (steeringDirection != 0) {
 			newHeading = getHeading();
 			if(steeringDirection > 0) {
-				steeringDirection--;
-				newHeading++;
+				steeringDirection -= 2;
+				newHeading += 2;
 			}
 			else {
-				steeringDirection++;
-				newHeading--;
+				steeringDirection += 2;
+				newHeading -= 2;
 			}
 			
 			
