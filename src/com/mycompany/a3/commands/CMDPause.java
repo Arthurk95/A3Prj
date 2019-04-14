@@ -27,10 +27,13 @@ public class CMDPause extends Command{
 		if(isPaused) {
 			button.setText("Play");
 			timer.cancel();
+			game.pauseGame();
 		}
 		else {
 			button.setText("Pause");
 			timer.schedule(GameUtility.TICK_RATE, true, game);
+			gameWorld.deselectAll();
+			game.unPauseGame();
 		}
 		gameWorld.changeGamePause();
 	}
