@@ -11,8 +11,8 @@ import java.util.Observable;
 
 import com.mycompany.a3.GameUtility;
 import com.mycompany.a3.gameobject.*;
-import com.mycompany.a3.objectcollection.GameObjectCollection;
-import com.mycompany.a3.objectcollection.IIterator;
+import com.mycompany.a3.gameobject.objectcollection.GameObjectCollection;
+import com.mycompany.a3.gameobject.objectcollection.IIterator;
 import com.mycompany.a3.strategy.*;
 
 /* This is where the GameWorld is stored. All interactions
@@ -35,6 +35,7 @@ public class GameWorld extends Observable {
 	private int gameClock = 0;
 	private boolean isSoundOn = false;
 	private int livesRemaining = 3;
+	private boolean isPaused = false;
 	private GameObjectCollection objectsCollection = new GameObjectCollection();
 	
 	@Override
@@ -57,6 +58,9 @@ public class GameWorld extends Observable {
 		changeNPRStrategies();
 		notifyObservers();
 	}
+	
+	public void changeGamePause() { isPaused = !isPaused; }
+	public boolean isPaused() { return isPaused; }
 	
 	public boolean isSoundOn() {return isSoundOn;}
 	
