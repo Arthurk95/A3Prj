@@ -110,6 +110,7 @@ public class Drone extends Movable{
 		return oldY;
 	}
 	
+	/* Draws an unfilled triangle to represent the Drone */
 	public void draw(Graphics g, Point containerOrigin) {
 		int halfSize = this.getSize() / 2;
 		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();

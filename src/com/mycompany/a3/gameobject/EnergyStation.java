@@ -48,6 +48,8 @@ public class EnergyStation extends Fixed{
 		this.setColor(rgb);
 	}
 	
+	/* Draws a filled circle with this EnergyStation's capacity 
+	 * written in the middle of it */
 	public void draw(Graphics g, Point containerOrigin) {
 		int halfSize = getSize()/2;
 		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();

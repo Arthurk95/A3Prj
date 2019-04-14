@@ -29,6 +29,7 @@ public class MapView extends Container implements Observer{
 		repaint();
 	}
 	
+	/* Paints every object in the GameWorld */
 	public void paint(Graphics g) {
 		super.paint(g);
 		IIterator allObjects = gw.getObjectCollection().getIterator();

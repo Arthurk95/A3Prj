@@ -29,6 +29,13 @@ public abstract class Movable extends GameObject{
 	public void move(int tickRate) {
 		float newX, newY;
 		double theta = Math.toRadians(90-heading);
+		
+		/* Calculates new X/Y coordinates based on heading,
+		 * speed, and the size of the game divided by the
+		 * tick rate of the Timer. The larger the tickRate,
+		 * the faster the object moves.
+		 * This makes an object's speed proportionate to the 
+		 * tickRate. */
 		float numX = GameUtility.gameSizeX() / tickRate;
 		float numY = GameUtility.gameSizeY() / tickRate;
 		newX = getXCoordinate() + ((float)Math.cos(theta)*getSpeed() / (numX/3));

@@ -7,7 +7,6 @@
 
 package com.mycompany.a3.gameworld;
 
-
 import java.util.Observable;
 
 import com.mycompany.a3.GameUtility;

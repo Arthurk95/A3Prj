@@ -253,6 +253,8 @@ public class Robot extends Movable implements ISteerable{
 		damageTaken(GameUtility.COLLISION_DAMAGE);
 	}
 	
+	/* Draws a FILLED rectangle for the PlayerRobot, and unfilled 
+	 * rectangles for each NonPlayerRobot. */
 	public void draw(Graphics g, Point containerOrigin) {
 		int halfSize = getSize()/2;
 		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();

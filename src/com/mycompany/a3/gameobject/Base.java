@@ -30,6 +30,8 @@ public class Base extends Fixed{
 	
 	public void setColor(int[] color) {}
 	
+	/* Draws a filled triangle to represent the Base,
+	 * with its sequenceNumber written inside */
 	public void draw(Graphics g, Point containerOrigin) {
 		int halfSize = this.getSize() / 2;
 		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();
