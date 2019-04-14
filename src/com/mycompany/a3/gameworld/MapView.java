@@ -47,22 +47,33 @@ public class MapView extends Container implements Observer{
 	public void pointerPressed(int x, int y) {
 		// only allows stuff to be selected when game is paused
 		if(gw.isPaused()) {
-			x = x - getParent().getAbsoluteX();
-			y = y - getParent().getAbsoluteY();
+			x = x - getX();
+			y = y - getY() - getParent().getAbsoluteY();
 			Point mousePointer = new Point(x, y);
-			Point component = new Point(getX(), getY());
 			IIterator allObjects = gw.getObjectCollection().getIterator();
 			while(allObjects.hasNext()) {
 				GameObject object = (GameObject)allObjects.getNext();
 				if(object instanceof Fixed) {
 					Fixed fixedObj = (Fixed)object;
 					
-					if(fixedObj.contains(mousePointer, component)) {
-						fixedObj.setSelected(true);
+					/* Moves object if the Position command was
+					 * pressed before clicking on the MapView */
+					if(fixedObj.isToBeMoved() && fixedObj.isSelected()) {
+						System.out.println(fixedObj.toString());
+						fixedObj.setLocation(x, y);
+						fixedObj.setSelected(false);
+						break;
 					}
-					else fixedObj.setSelected(false);
+					
+					else if(fixedObj.contains(mousePointer)) {
+						gw.deselectAll();
+						fixedObj.setSelected(true);
+						break;
+					}
+					else fixedObj.setSelected(false);					
 				}
 			}
+			drawWorld();
 		}
 		
 	}
