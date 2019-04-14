@@ -43,6 +43,10 @@ public class Game extends Form implements Runnable{
 	private CMDAboutInfo aboutInfoCMD;
 	private CMDHelp helpCMD;
 	private CMDPause pauseCMD;
+	private CMDPosition positionCMD;
+	private MyButton accelerateBTN, brakeBTN, turnRightBTN, turnLeftBTN,
+						strategiesBTN, positionBTN, pauseBTN;
+	private CheckBox soundCB;
 	
 	public Game() {
 		gameWorld = new GameWorld();
@@ -53,6 +57,7 @@ public class Game extends Form implements Runnable{
 		this.setLayout(new BorderLayout());
 		timer = new UITimer(this);
 		initCommands();
+		initButtons();
 
 		makeToolbar();
 		this.add(BorderLayout.NORTH, scoreView);
@@ -83,7 +88,7 @@ public class Game extends Form implements Runnable{
 		
 		Toolbar.setOnTopSideMenu(false);
 		
-		CheckBox soundCB = new CheckBox("Sound");
+		soundCB = new CheckBox("Sound");
 		soundCB.getAllStyles().setBgTransparency(255);
 		soundCB.getAllStyles().setBgColor(ColorUtil.LTGRAY);
 		soundCB.getAllStyles().setPadding(Component.TOP, 5);
@@ -104,11 +109,11 @@ public class Game extends Form implements Runnable{
 		Container leftPanel = new Container(); // main panel
 		leftPanel.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
 
-		leftPanel.add(newButton(accelerateCMD, 'a'));
+		leftPanel.add(accelerateBTN);
 		
-		leftPanel.add(newButton(brakeCMD, 'b'));
-		leftPanel.add(newButton(turnLeftCMD, 'l'));
-		leftPanel.add(newButton(turnRightCMD, 'r'));
+		leftPanel.add(brakeBTN);
+		leftPanel.add(turnLeftBTN);
+		leftPanel.add(turnRightBTN);
 		leftPanel.getAllStyles().setPadding(Component.RIGHT, 4);
 		leftPanel.getAllStyles().setPadding(Component.LEFT, 4);
 		return leftPanel;
@@ -119,11 +124,9 @@ public class Game extends Form implements Runnable{
 		// Create the row containers
 		Container bottomPanel = new Container();
 		bottomPanel.setLayout(new FlowLayout(Component.CENTER));
-		
-		MyButton pauseBTN = newButton(pauseCMD, (char) 0);
-		pauseCMD.setButton(pauseBTN);
+
 		bottomPanel.add(pauseBTN);
-		
+		bottomPanel.add(positionBTN);
 		bottomPanel.getAllStyles().setMargin(Component.BOTTOM, 5);
 		bottomPanel.getAllStyles().setMargin(Component.TOP, 5);
 		bottomPanel.getAllStyles().setPadding(Component.RIGHT, 4);
@@ -135,7 +138,7 @@ public class Game extends Form implements Runnable{
 	private Container makeRightColumn() {
 		Container rightColumn = new Container(new BoxLayout(BoxLayout.Y_AXIS));
 		
-		rightColumn.add(newButton(strategiesCMD, (char)0));
+		rightColumn.add(strategiesBTN);
 		return rightColumn;
 	}
 	
@@ -151,6 +154,20 @@ public class Game extends Form implements Runnable{
 		return button; 
 	}
 	
+	//accelerateBTN, brakeBTN, turnRightBTN, turnLeftBTN,
+	//strategiesBTN, positionBTN, pauseBTN;
+	private void initButtons() {
+		accelerateBTN = newButton(accelerateCMD, 'a');
+		brakeBTN = newButton(brakeCMD, 'b');
+		turnLeftBTN = newButton(turnLeftCMD, 'l');
+		turnRightBTN = newButton(turnRightCMD, 'r');
+		pauseBTN = newButton(pauseCMD, (char) 0);
+		pauseCMD.setButton(pauseBTN);
+		strategiesBTN = newButton(strategiesCMD, (char)0);
+		positionBTN = newButton(positionCMD, (char) 0);
+		positionBTN.setEnabled(false);
+	}
+	
 	private void initCommands() {
 		accelerateCMD = new CMDAccelerate(gameWorld);
 		brakeCMD = new CMDBrake(gameWorld);
@@ -161,6 +178,38 @@ public class Game extends Form implements Runnable{
 		soundCMD = new CMDSound(gameWorld);
 		helpCMD = new CMDHelp();
 		aboutInfoCMD = new CMDAboutInfo();
+		positionCMD = new CMDPosition(gameWorld);
+		positionCMD.setEnabled(false);
 		pauseCMD = new CMDPause(this, timer, gameWorld);
+	}
+	
+	/* Disables commands that are irrelevant when paused */
+	public void pauseGame() {
+		accelerateCMD.setEnabled(false);
+		accelerateBTN.setEnabled(false);
+		brakeBTN.setEnabled(false);
+		turnLeftBTN.setEnabled(false);
+		turnRightBTN.setEnabled(false);
+		strategiesBTN.setEnabled(false);
+		positionBTN.setEnabled(true);
+		removeKeyListener('a', accelerateCMD);
+		removeKeyListener('b', brakeCMD);
+		removeKeyListener('l', turnLeftCMD);
+		removeKeyListener('r', turnRightCMD);
+	}
+	
+	/* Re-inits all commands and buttons */
+	public void unPauseGame() {
+		accelerateCMD.setEnabled(true);
+		accelerateBTN.setEnabled(true);
+		brakeBTN.setEnabled(true);
+		turnLeftBTN.setEnabled(true);
+		turnRightBTN.setEnabled(true);
+		strategiesBTN.setEnabled(true);
+		positionBTN.setEnabled(false);
+		addKeyListener('a', accelerateCMD);
+		addKeyListener('b', brakeCMD);
+		addKeyListener('l', turnLeftCMD);
+		addKeyListener('r', turnRightCMD);
 	}
 }
