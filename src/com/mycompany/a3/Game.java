@@ -33,10 +33,6 @@ public class Game extends Form implements Runnable{
 	private MapView mapView;
 	private ScoreView scoreView;
 	private UITimer timer;
-	private CMDCollisionNPR collisionNPRCMD;
-	private CMDCollisionDrone collisionDroneCMD;
-	private CMDCollisionStation collisionStationCMD;
-	private CMDCollisionBase collisionBaseCMD;
 	private CMDAccelerate accelerateCMD;
 	private CMDBrake brakeCMD ;
 	private CMDTurnLeft turnLeftCMD;
@@ -123,11 +119,6 @@ public class Game extends Form implements Runnable{
 		// Create the row containers
 		Container bottomPanel = new Container();
 		bottomPanel.setLayout(new FlowLayout(Component.CENTER));
-		
-		bottomPanel.add(newButton(collisionNPRCMD, (char)0));
-		bottomPanel.add(newButton(collisionDroneCMD, 'g'));
-		bottomPanel.add(newButton(collisionStationCMD, 'e'));
-		bottomPanel.add(newButton(collisionBaseCMD, (char)0));
 		bottomPanel.add(newButton(pauseCMD, (char) 0));
 		
 		bottomPanel.getAllStyles().setMargin(Component.BOTTOM, 5);
@@ -158,10 +149,6 @@ public class Game extends Form implements Runnable{
 	}
 	
 	private void initCommands() {
-		collisionNPRCMD = new CMDCollisionNPR(gameWorld);
-		collisionDroneCMD = new CMDCollisionDrone(gameWorld);
-		collisionStationCMD = new CMDCollisionStation(gameWorld);
-		collisionBaseCMD = new CMDCollisionBase(gameWorld);
 		accelerateCMD = new CMDAccelerate(gameWorld);
 		brakeCMD = new CMDBrake(gameWorld);
 		turnLeftCMD = new CMDTurnLeft(gameWorld);
