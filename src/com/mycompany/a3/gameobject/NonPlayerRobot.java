@@ -27,6 +27,10 @@ public class NonPlayerRobot extends Robot{
 		currentStrategy.apply();
 	}
 
+	// NPRs sustain less damage so they can compete longer
+	private void collisionWithDrone() { damageTaken(GameUtility.COLLISION_DAMAGE/4); }
+	public void collisionWithRobot()  { damageTaken(GameUtility.COLLISION_DAMAGE/2); }
+	
 	public void move(int tickRate) {
 		invokeStrategy();
 		super.move(tickRate);
