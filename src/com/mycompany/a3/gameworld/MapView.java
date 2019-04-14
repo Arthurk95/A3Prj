@@ -8,6 +8,7 @@ import com.codename1.ui.Container;
 import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.plaf.Border;
+import com.mycompany.a3.gameobject.Fixed;
 import com.mycompany.a3.gameobject.GameObject;
 import com.mycompany.a3.gameobject.objectcollection.IIterator;
 
@@ -38,5 +39,31 @@ public class MapView extends Container implements Observer{
 			GameObject o = (GameObject)allObjects.getNext();
 			o.draw(g, thisOrigin);
 		}
+	}
+	
+	/* Overrides the Container method to perform an action when 
+	 * the mouse is clicked on the container */
+	@Override
+	public void pointerPressed(int x, int y) {
+		// only allows stuff to be selected when game is paused
+		if(gw.isPaused()) {
+			x = x - getParent().getAbsoluteX();
+			y = y - getParent().getAbsoluteY();
+			Point mousePointer = new Point(x, y);
+			Point component = new Point(getX(), getY());
+			IIterator allObjects = gw.getObjectCollection().getIterator();
+			while(allObjects.hasNext()) {
+				GameObject object = (GameObject)allObjects.getNext();
+				if(object instanceof Fixed) {
+					Fixed fixedObj = (Fixed)object;
+					
+					if(fixedObj.contains(mousePointer, component)) {
+						fixedObj.setSelected(true);
+					}
+					else fixedObj.setSelected(false);
+				}
+			}
+		}
+		
 	}
 }
