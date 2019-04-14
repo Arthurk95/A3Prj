@@ -62,6 +62,17 @@ public class GameWorld extends Observable {
 	public void changeGamePause() { isPaused = !isPaused; }
 	public boolean isPaused() { return isPaused; }
 	
+	public void deselectAll() {
+		IIterator allObjects = objectsCollection.getIterator();
+		while(allObjects.hasNext()) {
+			GameObject object = (GameObject)allObjects.getNext();
+			if(object instanceof Fixed) {
+				Fixed fixedObj = (Fixed)object;
+				fixedObj.setSelected(false);
+			}
+		}
+	}
+	
 	public boolean isSoundOn() {return isSoundOn;}
 	
 	public void flickSound(boolean newState) {

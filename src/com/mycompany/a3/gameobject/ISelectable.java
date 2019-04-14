@@ -6,6 +6,6 @@ import com.codename1.ui.geom.Point;
 public interface ISelectable {
 	public void setSelected(boolean yesNo);
 	public boolean isSelected();
-	public boolean contains(Point pointer, Point component);
+	public boolean contains(Point pointer);
 	public void draw(Graphics g, Point component);
 }
