@@ -9,6 +9,8 @@ import com.mycompany.a3.GameUtility;
 public class CMDPause extends Command{
 	private Game game;
 	private UITimer timer;
+	private MyButton button;
+	private boolean isPaused = false;
 	
 	public CMDPause(Game g, UITimer t) {
 		super("Pause");
@@ -18,13 +20,18 @@ public class CMDPause extends Command{
 
 	@Override
 	public void actionPerformed(ActionEvent ev) {
-		if(this.getCommandName().equals("Pause")) {
-			this.setCommandName("Play");
+		isPaused = !isPaused;
+		if(isPaused) {
+			button.setText("Play");
 			timer.cancel();
 		}
 		else {
-			this.setCommandName("Pause");
+			button.setText("Pause");
 			timer.schedule(GameUtility.TICK_RATE, true, game);
 		}
+	}
+	
+	public void setButton(MyButton b) {
+		button = b;
 	}
 }

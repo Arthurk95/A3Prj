@@ -34,7 +34,7 @@ public class Game extends Form implements Runnable{
 	private ScoreView scoreView;
 	private UITimer timer;
 	private CMDAccelerate accelerateCMD;
-	private CMDBrake brakeCMD ;
+	private CMDBrake brakeCMD;
 	private CMDTurnLeft turnLeftCMD;
 	private CMDTurnRight turnRightCMD;
 	private CMDStrategies strategiesCMD;
@@ -119,7 +119,10 @@ public class Game extends Form implements Runnable{
 		// Create the row containers
 		Container bottomPanel = new Container();
 		bottomPanel.setLayout(new FlowLayout(Component.CENTER));
-		bottomPanel.add(newButton(pauseCMD, (char) 0));
+		
+		MyButton pauseBTN = newButton(pauseCMD, (char) 0);
+		pauseCMD.setButton(pauseBTN);
+		bottomPanel.add(pauseBTN);
 		
 		bottomPanel.getAllStyles().setMargin(Component.BOTTOM, 5);
 		bottomPanel.getAllStyles().setMargin(Component.TOP, 5);
