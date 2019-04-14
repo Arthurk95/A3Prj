@@ -161,6 +161,6 @@ public class Game extends Form implements Runnable{
 		soundCMD = new CMDSound(gameWorld);
 		helpCMD = new CMDHelp();
 		aboutInfoCMD = new CMDAboutInfo();
-		pauseCMD = new CMDPause(this, timer);
+		pauseCMD = new CMDPause(this, timer, gameWorld);
 	}
 }

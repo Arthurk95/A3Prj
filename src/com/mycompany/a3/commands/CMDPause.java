@@ -5,16 +5,19 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.util.UITimer;
 import com.mycompany.a3.Game;
 import com.mycompany.a3.GameUtility;
+import com.mycompany.a3.gameworld.GameWorld;
 
 public class CMDPause extends Command{
 	private Game game;
+	private GameWorld gameWorld;
 	private UITimer timer;
 	private MyButton button;
 	private boolean isPaused = false;
 	
-	public CMDPause(Game g, UITimer t) {
+	public CMDPause(Game g, UITimer t, GameWorld gw) {
 		super("Pause");
 		timer = t;
+		gameWorld = gw;
 		game = g;
 	}
 
@@ -29,6 +32,7 @@ public class CMDPause extends Command{
 			button.setText("Pause");
 			timer.schedule(GameUtility.TICK_RATE, true, game);
 		}
+		gameWorld.changeGamePause();
 	}
 	
 	public void setButton(MyButton b) {
