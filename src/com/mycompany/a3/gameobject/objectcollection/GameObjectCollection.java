@@ -1,4 +1,4 @@
-package com.mycompany.a3.objectcollection;
+package com.mycompany.a3.gameobject.objectcollection;
 
 import java.util.ArrayList;
 
