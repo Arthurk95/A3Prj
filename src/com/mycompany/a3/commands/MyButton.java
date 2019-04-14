@@ -26,6 +26,8 @@ public class MyButton extends Button{
 		this.getAllStyles().setFgColor(ColorUtil.WHITE); // white text
 		this.getPressedStyle().setBgColor(ColorUtil.rgb(100, 100, 100)); // gray
 		this.getUnselectedStyle().setBgColor(ColorUtil.rgb(70, 140, 140)); // turquoise
+		this.getDisabledStyle().setBgColor(ColorUtil.rgb(100, 100, 100)); // gray
+		this.setEnabled(true);
 	}
 	
 }
