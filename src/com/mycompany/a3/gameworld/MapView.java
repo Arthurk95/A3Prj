@@ -6,19 +6,14 @@ import java.util.Observer;
 import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Container;
 import com.codename1.ui.Graphics;
-import com.codename1.ui.TextArea;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.plaf.Border;
-import com.mycompany.a3.GameUtility;
 import com.mycompany.a3.gameobject.GameObject;
-import com.mycompany.a3.gameobject.PlayerRobot;
-import com.mycompany.a3.objectcollection.GameObjectCollection;
 import com.mycompany.a3.objectcollection.IIterator;
 
 /* An empty container that Observes GameWorld and 
  * prints all of the objects to the console */
 public class MapView extends Container implements Observer{
-	TextArea output;
 	private GameWorld gw;
 	public MapView() {
 	}
@@ -36,8 +31,7 @@ public class MapView extends Container implements Observer{
 	
 	public void paint(Graphics g) {
 		super.paint(g);
-		GameObjectCollection gameObjCol = gw.getObjectCollection();
-		IIterator allObjects = gameObjCol.getIterator();
+		IIterator allObjects = gw.getObjectCollection().getIterator();
 		Point thisOrigin = new Point(getX(), getY());
 		while(allObjects.hasNext()) {
 			GameObject o = (GameObject)allObjects.getNext();

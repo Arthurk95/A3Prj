@@ -64,7 +64,7 @@ public class Drone extends Movable{
 		while (!(getLocation().isValid())) {
 			float newX = getXCoordinate();
 			float newY = getYCoordinate();
-			int distanceRemaining = getSpeed();
+			float distanceRemaining = getSpeed();
 			boolean valid = true;
 			while (valid) {
 				oldX = incrementX(newX, oldX);
@@ -110,10 +110,10 @@ public class Drone extends Movable{
 		return oldY;
 	}
 	
-	public void draw(Graphics g, Point pCmpRelPrnt) {
+	public void draw(Graphics g, Point containerOrigin) {
 		int halfSize = this.getSize() / 2;
-		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
-		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
+		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();
+		int centerY = (int)containerOrigin.getY() + (int)this.getLocation().getY();
 		
 		// Creates a triangle
 		

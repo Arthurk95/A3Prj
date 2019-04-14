@@ -23,7 +23,7 @@ public class GameUtility {
 	public static final int MAX_STEER_RIGHT = 40;
 	public static final int MAX_STATION_SIZE = 100;
 	public static final int MIN_STATION_SIZE = 60;
-	public static final int COLLISION_DAMAGE = 10;
+	public static final int COLLISION_DAMAGE = MAX_SPEED/10;
 	public static final int NUM_DRONES = randomInt(2, 5);
 	public static final int BASE_SIZE = 100;
 	public static final int ROBOT_SIZE = 60;

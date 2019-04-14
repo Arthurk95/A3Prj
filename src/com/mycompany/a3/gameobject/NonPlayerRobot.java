@@ -1,9 +1,5 @@
 package com.mycompany.a3.gameobject;
 
-import java.util.ArrayList;
-
-import com.codename1.ui.Graphics;
-import com.codename1.ui.geom.Point;
 import com.mycompany.a3.GameUtility;
 import com.mycompany.a3.strategy.Strategy;
 
@@ -14,7 +10,6 @@ import com.mycompany.a3.strategy.Strategy;
 public class NonPlayerRobot extends Robot{
 	private Strategy currentStrategy;
 	private int energyLevel = GameUtility.NPR_ENERGY_LEVEL;
-	private ArrayList<GameObject> isCollidingWith = new ArrayList<>();
 	
 	public NonPlayerRobot(float startingX, float startingY, int[] color, int size) {
 		super(startingX, startingY, color, size);
@@ -37,18 +32,6 @@ public class NonPlayerRobot extends Robot{
 		super.move(tickRate);
 		super.resetSteering();
 		energyLevel = GameUtility.NPR_ENERGY_LEVEL; // never runs out of energy
-	}
-
-	public void draw(Graphics g, Point pCmpRelPrnt) {
-		int halfSize = getSize()/2;
-		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
-		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
-		
-		int xCorner = centerX - halfSize;
-		int yCorner = centerY - halfSize;
-		
-		g.setColor(this.getColorAsInt());
-		g.drawRect(xCorner, yCorner, this.getSize(), this.getSize());
 	}
 	
 	public String toString() {

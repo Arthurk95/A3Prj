@@ -21,7 +21,7 @@ public abstract class Movable extends GameObject{
 	}
 	
 	private int heading; // degree value 0-360 for direction. 0 is north, 90 is east, etc
-	private int speed; // 0-GameObjectUtil.MAX_SPEED
+	private float speed; // 0-GameObjectUtil.MAX_SPEED
 	
 	/* Tells the object to move by determining its new coordinates
 	 * based on its heading and speed.
@@ -29,8 +29,10 @@ public abstract class Movable extends GameObject{
 	public void move(int tickRate) {
 		float newX, newY;
 		double theta = Math.toRadians(90-heading);
-		newX = getXCoordinate() + (float)(((Math.cos(theta))*getSpeed()) / tickRate);
-		newY = getYCoordinate() + (float)(((Math.sin(theta))*getSpeed()) / tickRate);
+		float numX = GameUtility.gameSizeX() / tickRate;
+		float numY = GameUtility.gameSizeY() / tickRate;
+		newX = getXCoordinate() + ((float)Math.cos(theta)*getSpeed() / (numX/3));
+		newY = getYCoordinate() + ((float)Math.sin(theta)*getSpeed() / (numY/3));
 		setLocation(newX, newY);
 	}
 	
@@ -49,14 +51,14 @@ public abstract class Movable extends GameObject{
 	}
 	
 	/* Sets the speed, makes sure it's within GameObjectUtil.MAX_SPEED and 0 */
-	public void setSpeed(int newSpeed) {
+	public void setSpeed(float newSpeed) {
 		speed = newSpeed;
 		if (speed > GameUtility.MAX_SPEED)
 			speed = GameUtility.MAX_SPEED;
 		else if (speed < 0)
 			speed = 0;
 	}
-	public int getSpeed() {return speed;}
+	public float getSpeed() {return speed;}
 	
 	public String toString() {
 		String parentDesc = super.toString();

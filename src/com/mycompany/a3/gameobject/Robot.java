@@ -9,8 +9,6 @@ package com.mycompany.a3.gameobject;
 
 import com.codename1.ui.geom.Point;
 
-import java.util.ArrayList;
-
 import com.codename1.ui.Graphics;
 import com.mycompany.a3.GameUtility;
 
@@ -25,16 +23,16 @@ import com.mycompany.a3.GameUtility;
 
 public class Robot extends Movable implements ISteerable{
 	private int steeringDirection = 0;
-	private int maximumSpeed = GameUtility.MAX_SPEED;
+	private float maximumSpeed = GameUtility.MAX_SPEED;
 	private float energyLevel = 100;
 	private float energyConsumptionRate = 2;
 	private int damageLevel = 0;
-	private int MAX_DAMAGE = 100;
+	private int MAX_DAMAGE = GameUtility.MAX_SPEED;
 	private int lastBaseReached = 1;
 
 	public Robot(float startingX, float startingY, int[] color, int size) {
 		super(startingX, startingY, color, size); // initial values passed to Movable
-		setSpeed(40);
+		setSpeed(GameUtility.MAX_SPEED/3);
 		setHeading(0);
 		damageLevel = 0;
 	}
@@ -163,10 +161,10 @@ public class Robot extends Movable implements ISteerable{
 	
 	public void resetSteering() { steeringDirection = 0; }
 	public int getSteeringAmount() { return steeringDirection; }
-	/* Increases speed of Robot by 5, up to maximumSpeed */
+	/* Increases speed of Robot by a 10th of max speed, up to maximumSpeed */
 	public boolean accelerate() {
 		if(getSpeed() < maximumSpeed) {
-			setSpeed(getSpeed() + 5);
+			setSpeed(getSpeed() + GameUtility.MAX_SPEED/10);
 			return true;
 		}
 		return false;
@@ -174,8 +172,8 @@ public class Robot extends Movable implements ISteerable{
 	
 	/* Reduces speed by 5,*/
 	public void brake() {
-		setSpeed(getSpeed() - 5);
-		System.out.println("Decelerated by " + 5);
+		setSpeed(getSpeed() - GameUtility.MAX_SPEED/10);
+		System.out.println("Decelerated by " + GameUtility.MAX_SPEED/10);
 	}
 	
 	/* Adds the steeringDirection to the Robot's heading,
@@ -187,7 +185,7 @@ public class Robot extends Movable implements ISteerable{
 		else if (steeringDirection < GameUtility.MAX_STEER_LEFT)
 			steeringDirection = GameUtility.MAX_STEER_LEFT;
 		
-		
+		// turns robot slowly so it doesn't jump directions
 		if (steeringDirection != 0) {
 			newHeading = getHeading();
 			if(steeringDirection > 0) {
@@ -254,7 +252,20 @@ public class Robot extends Movable implements ISteerable{
 	public void collisionWithRobot() {
 		damageTaken(GameUtility.COLLISION_DAMAGE);
 	}
-	public void draw(Graphics g, Point pCmpRelPrnt) {
+	
+	public void draw(Graphics g, Point containerOrigin) {
+		int halfSize = getSize()/2;
+		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();
+		int centerY = (int)containerOrigin.getY() + (int)this.getLocation().getY();
+		
+		int xCorner = centerX - halfSize;
+		int yCorner = centerY - halfSize;
+		
+		g.setColor(this.getColorAsInt());
+		if(this instanceof NonPlayerRobot)
+			g.drawRect(xCorner, yCorner, this.getSize(), this.getSize());
+		else
+			g.fillRect(xCorner, yCorner, this.getSize(), this.getSize());
 	}
 	
 	public String toString() {

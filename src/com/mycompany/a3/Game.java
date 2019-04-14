@@ -109,6 +109,7 @@ public class Game extends Form implements Runnable{
 		leftPanel.setLayout(new BoxLayout(BoxLayout.Y_AXIS));
 
 		leftPanel.add(newButton(accelerateCMD, 'a'));
+		
 		leftPanel.add(newButton(brakeCMD, 'b'));
 		leftPanel.add(newButton(turnLeftCMD, 'l'));
 		leftPanel.add(newButton(turnRightCMD, 'r'));
@@ -151,6 +152,7 @@ public class Game extends Form implements Runnable{
 		button.setCommand(cmd);
 		if (keyListener != (char)0){
 			addKeyListener(keyListener, cmd);
+			keyRepeated(keyListener);
 		}
 		return button; 
 	}

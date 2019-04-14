@@ -6,7 +6,6 @@
  * -------------------- */
 
 package com.mycompany.a3.gameobject;
-import java.util.Random;
 
 import com.codename1.ui.geom.Point;
 import com.codename1.charts.util.ColorUtil;
@@ -49,10 +48,10 @@ public class EnergyStation extends Fixed{
 		this.setColor(rgb);
 	}
 	
-	public void draw(Graphics g, Point pCmpRelPrnt) {
+	public void draw(Graphics g, Point containerOrigin) {
 		int halfSize = getSize()/2;
-		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
-		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
+		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();
+		int centerY = (int)containerOrigin.getY() + (int)this.getLocation().getY();
 		
 		int xCorner = centerX - halfSize;
 		int yCorner = centerY - halfSize;

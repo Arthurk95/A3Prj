@@ -195,7 +195,7 @@ public class GameWorld extends Observable {
 					GameObject currentOtherObject = (GameObject)otherObjects.getNext();
 					if (currentRobot == currentOtherObject) {} // do nothing
 					else if(currentRobot.collidesWith(currentOtherObject) &&
-							currentOtherObject.collidesWith(currentRobot)) {
+								currentOtherObject.collidesWith(currentRobot)) {
 						if ((currentOtherObject instanceof EnergyStation) && 
 								(((EnergyStation)currentOtherObject).getCapacity() != 0)) {
 							createEnergyStation();

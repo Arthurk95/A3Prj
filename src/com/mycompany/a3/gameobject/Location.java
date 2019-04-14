@@ -7,8 +7,6 @@
 
 package com.mycompany.a3.gameobject;
 
-import java.util.Random;
-
 import com.mycompany.a3.GameUtility;
 
 /* Utility class to store and handle a GameObject's location.

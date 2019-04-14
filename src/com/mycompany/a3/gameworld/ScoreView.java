@@ -7,12 +7,9 @@ import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Component;
 import com.codename1.ui.Container;
 import com.codename1.ui.Label;
-import com.codename1.ui.layouts.BorderLayout;
-import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.plaf.Border;
 import com.mycompany.a3.gameobject.PlayerRobot;
-import com.mycompany.a3.gameobject.Robot;
 import com.mycompany.a3.gameworld.GameWorld;
 
 public class ScoreView extends Container implements Observer{

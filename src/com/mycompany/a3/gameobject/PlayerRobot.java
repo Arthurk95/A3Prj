@@ -7,10 +7,6 @@
 
 package com.mycompany.a3.gameobject;
 
-import java.util.ArrayList;
-
-import com.codename1.ui.Graphics;
-import com.codename1.ui.geom.Point;
 import com.mycompany.a3.GameUtility;
 
 /* PlayerRobot object that extends Robot.
@@ -21,7 +17,6 @@ import com.mycompany.a3.GameUtility;
 
 public class PlayerRobot extends Robot{
 	private static PlayerRobot playerRobot;
-	private ArrayList<GameObject> isCollidingWith = new ArrayList<>();
 	
 	private PlayerRobot() {
 		super(GameUtility.startX(), GameUtility.startY(), 
@@ -59,18 +54,6 @@ public class PlayerRobot extends Robot{
 		if (playerRobot == null)
 			playerRobot = new PlayerRobot();
 		return playerRobot;
-	}
-	
-	public void draw(Graphics g, Point pCmpRelPrnt) {
-		int halfSize = getSize()/2;
-		int centerX = (int)pCmpRelPrnt.getX() + (int)this.getLocation().getX();
-		int centerY = (int)pCmpRelPrnt.getY() + (int)this.getLocation().getY();
-		
-		int xCorner = centerX - halfSize;
-		int yCorner = centerY - halfSize;
-
-		g.setColor(this.getColorAsInt());
-		g.fillRect(xCorner, yCorner, this.getSize(), this.getSize());
 	}
 	
 	public String toString() {

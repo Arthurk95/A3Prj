@@ -26,7 +26,6 @@ import com.codename1.charts.util.ColorUtil;
 public abstract class GameObject implements IDrawable, ICollider{
 	private int size;
 	private int[] color = new int[3]; // RGB color
-	private ColorUtil colorCU = new ColorUtil();
 	private Location location = new Location();
 	private ArrayList<GameObject> isCollidingWith = new ArrayList<>();
 
@@ -38,7 +37,6 @@ public abstract class GameObject implements IDrawable, ICollider{
 		location.set(x, y);
 		setSize(sz);
 		this.color = colr;
-		setColorCU();
 	}
 	
 	public boolean collidesWith(GameObject otherObject) { 
@@ -73,21 +71,17 @@ public abstract class GameObject implements IDrawable, ICollider{
 		// if it's colliding, but it's already in the list, ignore it
 		else if(isCollision && isCollidingWith.contains(otherObject)) {
 			isCollision = false;
-		}
-				
+		}			
 		
 		return isCollision;
 	}
 	
 	public void handleCollision(GameObject otherObject) {}
-	
-	// Sets the RGB colors of the ColorUtil object
-	private void setColorCU() {colorCU.rgb(color[0], color[1], color[2]);}
-	public int getColorAsInt() { return colorCU.rgb(color[0], color[1], color[2]); }
+
+	public int getColorAsInt() { return ColorUtil.rgb(color[0], color[1], color[2]); }
 	
 	public void setColor(int[] newColor) {
 		this.color = newColor;
-		setColorCU();
 	}
 	
 	public int[] getColor() 	{	return this.color;	}
