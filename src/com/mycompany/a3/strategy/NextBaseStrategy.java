@@ -6,8 +6,8 @@ import com.mycompany.a3.gameobject.Base;
 import com.mycompany.a3.gameobject.GameObject;
 import com.mycompany.a3.gameobject.Location;
 import com.mycompany.a3.gameobject.NonPlayerRobot;
-import com.mycompany.a3.objectcollection.GameObjectCollection;
-import com.mycompany.a3.objectcollection.IIterator;
+import com.mycompany.a3.gameobject.objectcollection.GameObjectCollection;
+import com.mycompany.a3.gameobject.objectcollection.IIterator;
 
 /* Contains an instance of the GameObjectCollection,
  * which is used to find the NPR's next base. Meaning,
