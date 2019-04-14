@@ -9,7 +9,7 @@ import com.codename1.ui.Graphics;
 import com.codename1.ui.geom.Point;
 import com.codename1.ui.plaf.Border;
 import com.mycompany.a3.gameobject.GameObject;
-import com.mycompany.a3.objectcollection.IIterator;
+import com.mycompany.a3.gameobject.objectcollection.IIterator;
 
 /* An empty container that Observes GameWorld and 
  * prints all of the objects to the console */
