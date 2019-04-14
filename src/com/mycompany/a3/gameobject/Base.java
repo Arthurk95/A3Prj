@@ -33,6 +33,7 @@ public class Base extends Fixed{
 	/* Draws a filled triangle to represent the Base,
 	 * with its sequenceNumber written inside */
 	public void draw(Graphics g, Point containerOrigin) {
+		setSelected(false); 
 		int halfSize = this.getSize() / 2;
 		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();
 		int centerY = (int)containerOrigin.getY() + (int)this.getLocation().getY();
@@ -59,7 +60,7 @@ public class Base extends Fixed{
 		g.setColor(ColorUtil.WHITE);
 		g.drawString(String.valueOf(sequenceNumber), centerX - (halfSize/6), centerY - (halfSize/2));
 	}
-	
+
 	public String toString() {
 		String parentDesc = super.toString();
 		String thisDesc = " seqNum=" + sequenceNumber;
