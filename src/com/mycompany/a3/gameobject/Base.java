@@ -9,6 +9,7 @@ package com.mycompany.a3.gameobject;
 
 import com.codename1.ui.geom.Point;
 import com.codename1.charts.util.ColorUtil;
+import com.codename1.ui.Font;
 import com.codename1.ui.Graphics;
 
 /* Fixed GameObject.
@@ -33,7 +34,6 @@ public class Base extends Fixed{
 	/* Draws a filled triangle to represent the Base,
 	 * with its sequenceNumber written inside */
 	public void draw(Graphics g, Point containerOrigin) {
-		setSelected(false); 
 		int halfSize = this.getSize() / 2;
 		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();
 		int centerY = (int)containerOrigin.getY() + (int)this.getLocation().getY();
@@ -55,10 +55,22 @@ public class Base extends Fixed{
 		int xPoints[] = {xCorner1, xCorner2, xCorner3};
 		int yPoints[] = {yCorner1, yCorner2, yCorner3};
 
+		
 		g.setColor(this.getColorAsInt());
-		g.fillPolygon(xPoints, yPoints, 3);
+		if(this.isSelected()) {
+			g.drawPolygon(xPoints, yPoints, 3);
+			g.setColor(ColorUtil.BLACK);
+		}
+		else {
+			g.fillPolygon(xPoints, yPoints, 3);
+			g.setColor(ColorUtil.WHITE);
+		}
+		
+		g.setFont(Font.createTrueTypeFont("native:MainRegular").
+                derive(halfSize, Font.STYLE_PLAIN));
 		g.setColor(ColorUtil.WHITE);
-		g.drawString(String.valueOf(sequenceNumber), centerX - (halfSize/6), centerY - (halfSize/2));
+		g.drawString(String.valueOf(sequenceNumber), centerX - (halfSize/3), 
+				(int)(centerY - (double)(halfSize/1.5)));
 	}
 
 	public String toString() {

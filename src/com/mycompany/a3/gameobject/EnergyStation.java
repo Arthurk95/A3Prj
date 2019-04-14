@@ -51,7 +51,6 @@ public class EnergyStation extends Fixed{
 	/* Draws a filled circle with this EnergyStation's capacity 
 	 * written in the middle of it */
 	public void draw(Graphics g, Point containerOrigin) {
-		setSelected(false);
 		int halfSize = getSize()/2;
 		int centerX = (int)containerOrigin.getX() + (int)this.getLocation().getX();
 		int centerY = (int)containerOrigin.getY() + (int)this.getLocation().getY();
@@ -61,11 +60,17 @@ public class EnergyStation extends Fixed{
 
 		// draw filled circle
 		g.setColor(this.getColorAsInt());
-		g.fillArc(xCorner, yCorner, this.getSize(), this.getSize(), 0, 360);
+		if(this.isSelected()) {
+			g.drawArc(xCorner, yCorner, this.getSize(), this.getSize(), 0, 360);
+			g.setColor(ColorUtil.BLACK); // sets color of font
+		}
+		else {
+			g.fillArc(xCorner, yCorner, this.getSize(), this.getSize(), 0, 360);
+			g.setColor(ColorUtil.WHITE); // sets color of font
+		}
 		// draw capacity size in center of circle
 		g.setFont(Font.createTrueTypeFont("native:MainRegular").
                 derive(halfSize, Font.STYLE_PLAIN));
-		g.setColor(ColorUtil.WHITE);
 		g.drawString(String.valueOf(capacity), centerX - (halfSize/2), centerY - (halfSize/2));
 	}
 	
