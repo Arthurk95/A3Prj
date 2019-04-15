@@ -2,9 +2,6 @@ package com.mycompany.a3.commands;
 
 import com.codename1.ui.CheckBox;
 import com.codename1.ui.Command;
-import com.codename1.ui.Dialog;
-import com.codename1.ui.Display;
-import com.codename1.ui.SideMenuBar;
 import com.codename1.ui.events.ActionEvent;
 import com.mycompany.a3.gameworld.GameWorld;
 
@@ -23,6 +20,5 @@ public class CMDSound extends Command {
 			gameWorld.flickSound(true);
 		}
 		else gameWorld.flickSound(false);
-		SideMenuBar.closeCurrentMenu();
 	}
 }
