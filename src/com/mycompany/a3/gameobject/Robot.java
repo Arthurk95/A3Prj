@@ -215,17 +215,17 @@ public class Robot extends Movable implements ISteerable{
 	 * a collision between two GameObjects */
 	public void handleCollision(GameObject otherObject) {
 		if (otherObject instanceof EnergyStation) {
-			collisionWithEnergyStation(((EnergyStation)otherObject).getCapacity());
+			this.collisionWithEnergyStation(((EnergyStation)otherObject).getCapacity());
 			((EnergyStation)otherObject).collisionWithRobot();
 		}
 		else if (otherObject instanceof Base) {
-			updateLastBase(((Base)otherObject).getSequenceOrder());
+			this.updateLastBase(((Base)otherObject).getSequenceOrder());
 		}
 		else if (otherObject instanceof Drone) {
-			collisionWithDrone();
+			this.collisionWithDrone();
 		}
 		else if (otherObject instanceof Robot) {
-			collisionWithRobot();
+			this.collisionWithRobot();
 			((Robot)otherObject).collisionWithRobot();
 		}
 	}
@@ -258,6 +258,10 @@ public class Robot extends Movable implements ISteerable{
 		justCollided = true;
 	}
 	
+	public void recentlyCollided() {
+		justCollided = true;
+	}
+	
 	/* Draws a FILLED rectangle for the PlayerRobot, and unfilled 
 	 * rectangles for each NonPlayerRobot. */
 	public void draw(Graphics g, Point containerOrigin) {
@@ -280,8 +284,9 @@ public class Robot extends Movable implements ISteerable{
 			drawRedSqTimer = drawRedSqTimer + GameUtility.TICK_RATE;
 			g.setColor(ColorUtil.rgb(255,0,0));
 			g.drawRect(xCorner, yCorner, this.getSize(), this.getSize());
-			if(2000 % drawRedSqTimer == 0) { // 2 seconds
+			if(2000 / drawRedSqTimer <= 1) { // 2 seconds
 				justCollided = false;
+				drawRedSqTimer = 0;
 			}
 		}
 	}

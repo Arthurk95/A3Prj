@@ -6,6 +6,7 @@ import com.codename1.media.Media;
 import com.codename1.media.MediaManager;
 import com.codename1.ui.Display;
 
+/* Loops a sound */
 public class BGSound implements Runnable{
 	private Media m;
 	public BGSound(String fileName) {

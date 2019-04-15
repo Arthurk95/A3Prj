@@ -42,7 +42,8 @@ public class MapView extends Container implements Observer{
 	}
 	
 	/* Overrides the Container method to perform an action when 
-	 * the mouse is clicked on the container */
+	 * the mouse is clicked on the container to allow Fixed
+	 * objects to be selectable. */
 	@Override
 	public void pointerPressed(int x, int y) {
 		// only allows stuff to be selected when game is paused

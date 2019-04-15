@@ -12,6 +12,7 @@ import com.codename1.ui.plaf.Border;
 import com.mycompany.a3.gameobject.PlayerRobot;
 import com.mycompany.a3.gameworld.GameWorld;
 
+/*  */
 public class ScoreView extends Container implements Observer{
 	private Label livesLeft = new Label("3");
 	private Label gameTime = new Label("0");

@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3.gameobject;
@@ -60,6 +59,9 @@ public class EnergyStation extends Fixed{
 
 		// draw filled circle
 		g.setColor(this.getColorAsInt());
+		
+		/* Filled circle if not selected.
+		 * Unfilled if selected */
 		if(this.isSelected()) {
 			g.drawArc(xCorner, yCorner, this.getSize(), this.getSize(), 0, 360);
 			g.setColor(ColorUtil.BLACK); // sets color of font

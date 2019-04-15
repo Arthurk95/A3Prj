@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3.gameobject;

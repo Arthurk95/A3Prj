@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3.gameobject;
@@ -27,6 +26,8 @@ public abstract class GameObject implements IDrawable, ICollider{
 	private int size;
 	private int[] color = new int[3]; // RGB color
 	private Location location = new Location();
+	
+	// List that stores any object that this is colliding with
 	private ArrayList<GameObject> isCollidingWith = new ArrayList<>();
 
 	public GameObject() {}
@@ -39,6 +40,15 @@ public abstract class GameObject implements IDrawable, ICollider{
 		this.color = colr;
 	}
 	
+	/* Checks to see if this and the otherObject are colliding. 
+	 * If they are colliding, then the otherObject is added to 
+	 * this object's list of collidingWith. 
+	 * If they are colliding, but the otherObject is already in
+	 * the list, we don't want to do handle the collision again
+	 * so we return false.
+	 * If there is no collision, but the otherObject is in the list,
+	 * remove the otherObject from the list. This means they WERE
+	 * colliding, but no longer are. */
 	public boolean collidesWith(GameObject otherObject) { 
 		int halfSizeThis = this.getSize()/2;
 		int halfSizeOther = otherObject.getSize()/2;

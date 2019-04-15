@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3.gameobject;
@@ -21,7 +20,7 @@ public abstract class Movable extends GameObject{
 	}
 	
 	private int heading; // degree value 0-360 for direction. 0 is north, 90 is east, etc
-	private float speed; // 0-GameObjectUtil.MAX_SPEED
+	private float speed; // 0 <= speed <= GameObjectUtil.MAX_SPEED
 	
 	/* Tells the object to move by determining its new coordinates
 	 * based on its heading and speed.
@@ -32,9 +31,9 @@ public abstract class Movable extends GameObject{
 		
 		/* Calculates new X/Y coordinates based on heading,
 		 * speed, and the size of the game divided by the
-		 * tick rate of the Timer. The larger the tickRate,
-		 * the faster the object moves.
-		 * This makes an object's speed proportionate to the 
+		 * tick rate of the Timer. 
+		 * The larger the tickRate, the faster the object moves.
+		 * This makes an object's speed proportional to the 
 		 * tickRate. */
 		float numX = GameUtility.gameSizeX() / tickRate;
 		float numY = GameUtility.gameSizeY() / tickRate;

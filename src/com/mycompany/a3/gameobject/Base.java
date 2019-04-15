@@ -53,8 +53,6 @@ public class Base extends Fixed{
 		
 		int xPoints[] = {xCorner1, xCorner2, xCorner3};
 		int yPoints[] = {yCorner1, yCorner2, yCorner3};
-
-		
 		g.setColor(this.getColorAsInt());
 		
 		/* Draws a filled square if the base isn't selected. 
@@ -73,6 +71,7 @@ public class Base extends Fixed{
 		g.setColor(ColorUtil.WHITE);
 		g.drawString(String.valueOf(sequenceNumber), centerX - (halfSize/3), 
 				(int)(centerY - (double)(halfSize/1.5)));
+		
 		
 		/* Draws a CYAN border around the next base */
 		if(this.getSequenceOrder() == PlayerRobot.getPlayerRobot().getLastBaseReached() + 1) {

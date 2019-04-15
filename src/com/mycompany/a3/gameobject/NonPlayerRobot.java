@@ -28,8 +28,14 @@ public class NonPlayerRobot extends Robot{
 	}
 
 	// NPRs sustain less damage so they can compete longer
-	private void collisionWithDrone() { damageTaken(GameUtility.COLLISION_DAMAGE/4); }
-	public void collisionWithRobot()  { damageTaken(GameUtility.COLLISION_DAMAGE/2); }
+	private void collisionWithDrone() { 
+		damageTaken(GameUtility.COLLISION_DAMAGE/4); 
+		recentlyCollided();
+	}
+	public void collisionWithRobot()  { 
+		damageTaken(GameUtility.COLLISION_DAMAGE/2); 
+		recentlyCollided();
+	}
 	
 	public void move(int tickRate) {
 		invokeStrategy();

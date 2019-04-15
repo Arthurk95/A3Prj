@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3;
@@ -155,8 +154,7 @@ public class Game extends Form implements Runnable{
 		return button; 
 	}
 	
-	//accelerateBTN, brakeBTN, turnRightBTN, turnLeftBTN,
-	//strategiesBTN, positionBTN, pauseBTN;
+	/* Creates all the buttons */
 	private void initButtons() {
 		accelerateBTN = newButton(accelerateCMD, 'a');
 		brakeBTN = newButton(brakeCMD, 'b');
@@ -169,6 +167,7 @@ public class Game extends Form implements Runnable{
 		positionBTN.setEnabled(false);
 	}
 	
+	/* Initializes all commands */
 	private void initCommands() {
 		accelerateCMD = new CMDAccelerate(gameWorld);
 		brakeCMD = new CMDBrake(gameWorld);
@@ -199,7 +198,7 @@ public class Game extends Form implements Runnable{
 		removeKeyListener('r', turnRightCMD);
 	}
 	
-	/* Re-inits all commands and buttons */
+	/* Re-enables all relevant buttons */
 	public void unPauseGame() {
 		accelerateCMD.setEnabled(true);
 		accelerateBTN.setEnabled(true);
