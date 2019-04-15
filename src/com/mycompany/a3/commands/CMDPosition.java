@@ -15,6 +15,10 @@ public class CMDPosition extends Command{
 		gameWorld = gw;
 	}
 
+	/* Goes through list of all objects and finds the first
+	 * selected Fixed object. Then sets its toBeMoved value
+	 * to true, which will make it move when the next
+	 * pointerPressed call occurs in MapView */
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 		if(gameWorld.isPaused()) {
