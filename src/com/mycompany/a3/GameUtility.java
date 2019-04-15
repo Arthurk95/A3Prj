@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3;
@@ -15,13 +14,13 @@ import java.util.Random;
  * Contains an inner class which stores the size of the
  * game map, that can only be changed once. */
 public class GameUtility {
-	public static final int TICK_RATE = 500; // in ms
+	public static final int TICK_RATE = 20; // in ms
 	public static final int INITIAL_ENERGY_STATIONS = 5;
 	public static final int MAX_SPEED = 100;
 	public static final int NUM_BASES = 5;
-	public static final int STEER_AMOUNT = TICK_RATE/4;
-	public static final int MAX_STEER_LEFT = TICK_RATE*2;
-	public static final int MAX_STEER_RIGHT = TICK_RATE*2;
+	public static final int STEER_AMOUNT = (int)TICK_RATE/2;
+	public static final int MAX_STEER_LEFT = -(TICK_RATE*2);
+	public static final int MAX_STEER_RIGHT = (int)TICK_RATE*2;
 	public static final int MAX_STATION_SIZE = 100;
 	public static final int MIN_STATION_SIZE = 60;
 	public static final int COLLISION_DAMAGE = MAX_SPEED/10;
