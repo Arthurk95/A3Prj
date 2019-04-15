@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3.gameobject;
@@ -57,6 +56,9 @@ public class Base extends Fixed{
 
 		
 		g.setColor(this.getColorAsInt());
+		
+		/* Draws a filled square if the base isn't selected. 
+		 * Unfilled if it is selected */
 		if(this.isSelected()) {
 			g.drawPolygon(xPoints, yPoints, 3);
 			g.setColor(ColorUtil.BLACK);
@@ -71,6 +73,12 @@ public class Base extends Fixed{
 		g.setColor(ColorUtil.WHITE);
 		g.drawString(String.valueOf(sequenceNumber), centerX - (halfSize/3), 
 				(int)(centerY - (double)(halfSize/1.5)));
+		
+		/* Draws a CYAN border around the next base */
+		if(this.getSequenceOrder() == PlayerRobot.getPlayerRobot().getLastBaseReached() + 1) {
+			g.setColor(ColorUtil.CYAN);
+			g.drawPolygon(xPoints, yPoints, 3);
+		}
 	}
 
 	public String toString() {
