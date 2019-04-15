@@ -13,6 +13,8 @@ import com.mycompany.a3.GameUtility;
 import com.mycompany.a3.gameobject.*;
 import com.mycompany.a3.gameobject.objectcollection.GameObjectCollection;
 import com.mycompany.a3.gameobject.objectcollection.IIterator;
+import com.mycompany.a3.sound.BGSound;
+import com.mycompany.a3.sound.Sound;
 import com.mycompany.a3.strategy.*;
 
 /* This is where the GameWorld is stored. All interactions
@@ -33,10 +35,15 @@ import com.mycompany.a3.strategy.*;
 */
 public class GameWorld extends Observable {
 	private int gameClock = 0;
-	private boolean isSoundOn = false;
+	private boolean isSoundOn = true;
 	private int livesRemaining = 3;
 	private boolean isPaused = false;
 	private GameObjectCollection objectsCollection = new GameObjectCollection();
+	private Sound energyCollisionSound = new Sound("Smallbolt.wav");
+	private Sound robotCollisionSound = new Sound("CollisionSound.wav");
+	private Sound playerReachedBaseSound = new Sound("Yay.wav");
+	private Sound robotDeathSound = new Sound("RobotDeath.wav");
+	private BGSound bgMusic = new BGSound("bensound-moose.wav");
 	
 	@Override
 	public void notifyObservers() {
@@ -50,18 +57,40 @@ public class GameWorld extends Observable {
 	 * The PLAYER Robot is ALWAYS at index 0 in the allObjects list */
 	public void init() {
 		objectsCollection = new GameObjectCollection();
+		stopSounds();
 		createBases();
 		createEnergyStations();	
 		createDrones();
 		createNPRs();
 		createRobot();
 		changeNPRStrategies();
+		bgMusic.run();
 		notifyObservers();
 	}
 	
-	public void changeGamePause() { isPaused = !isPaused; }
+	private void stopSounds() {
+		energyCollisionSound.stop();
+		robotCollisionSound.stop();
+		playerReachedBaseSound.stop();
+		robotDeathSound.stop();
+	}
+	
+	/* Pauses/resumes game.
+	 * Stops all sound and music if game is paused*/
+	public void changeGamePause() { 
+		isPaused = !isPaused; 
+		if(isSoundOn()) {
+			if(isPaused) {
+				stopSounds();
+				bgMusic.pause();
+			}
+			else bgMusic.play();
+		}
+	}
+	
 	public boolean isPaused() { return isPaused; }
 	
+	// Deselects all Fixed objects
 	public void deselectAll() {
 		IIterator allObjects = objectsCollection.getIterator();
 		while(allObjects.hasNext()) {
@@ -77,6 +106,11 @@ public class GameWorld extends Observable {
 	
 	public void flickSound(boolean newState) {
 		isSoundOn = newState;
+		if(!isSoundOn) {
+			bgMusic.pause();
+		}
+		else if(!isPaused)
+			bgMusic.play();
 		notifyObservers();
 	}
 	
@@ -213,7 +247,9 @@ public class GameWorld extends Observable {
 						if ((currentOtherObject instanceof EnergyStation) && 
 								(((EnergyStation)currentOtherObject).getCapacity() != 0)) {
 							createEnergyStation();
+							
 						}
+						playSound(currentRobot, currentOtherObject);
 						currentRobot.handleCollision(currentOtherObject);
 						notifyObservers();
 					}
@@ -264,6 +300,7 @@ public class GameWorld extends Observable {
 	public boolean playerAtMaxDamage() {
 		if (PlayerRobot.getPlayerRobot().getDamage() >= 100) {
 			System.out.println("\nSustained too much damage! Lost 1 life");
+			robotDeathSound.play();
 			return true;
 		}
 		else return false;
@@ -313,46 +350,6 @@ public class GameWorld extends Observable {
 		notifyObservers();
 	}
 	
-	/* Player Robot collided with Drone, so takes half the damage of colliding 
-	 * with another Robot */
-	public void collisionWithDrone() {
-		PlayerRobot.getPlayerRobot().damageTaken(GameUtility.COLLISION_DAMAGE/2);
-		notifyObservers();
-		System.out.println("Drone collided with player, did " + GameUtility.COLLISION_DAMAGE/2 + " damage");
-	}
-	
-	/* Robot has collided with an EnergyStation. 
-	 * Gets the first EnergyStation in the list, makes sure it hasn't been
-	 * collided with before (more than 0 capacity), and passes its capacity
-	 * to the Robot. Then calls a method in EnergyStation to set its capacity 
-	 * to 0 and fade its color, indicating it is inactive.
-	 * Creates a new randomly generated EnergyStation */
-	public void collisionWithEnergyStation() {
-		IIterator allObjects = objectsCollection.getIterator();
-		while(allObjects.hasNext()) {
-			GameObject currentObject = (GameObject)allObjects.getNext();
-			if (currentObject instanceof EnergyStation) {
-				EnergyStation e = (EnergyStation)currentObject;
-				if (e.getCapacity() == 0) {} // skip
-				else {
-					PlayerRobot.getPlayerRobot().collisionWithEnergyStation(e.getCapacity());
-					notifyObservers();
-					e.collisionWithRobot();
-					notifyObservers();
-					createEnergyStation();
-					System.out.println("Collided with EnergyStation of size " + e.getSize());
-					break;
-				}
-			}
-		}
-	}
-	
-	/* Robot collided with a Base */
-	public void collisionWithBase(int baseNum) {
-		PlayerRobot.getPlayerRobot().updateLastBase(baseNum);
-		notifyObservers();
-	}
-	
 	/* Changes every NPRs Strategy.
 	 * Goes through the GameObjectCollection and changes each
 	 * one's Strategy */
@@ -388,25 +385,31 @@ public class GameWorld extends Observable {
 			}
 		}
 	}
-
-	/* Robot collided with another Robot. 
-	 * Robot takes damage which reduces max speed,
-	 * and a random NPR takes damage as well */
-	public void collisionWithRobot() {
-		PlayerRobot.getPlayerRobot().damageTaken(GameUtility.COLLISION_DAMAGE);
-		IIterator objects = objectsCollection.getIterator();
-		int randomNum = GameUtility.randomInt(1, 4);
-		while(objects.hasNext()) {
-			GameObject currentObject = (GameObject)objects.getNext();
-			// random of the three NPRs
-			for(int i = 1; currentObject instanceof NonPlayerRobot; i++) {
-				NonPlayerRobot npr = (NonPlayerRobot)currentObject;
-				if(randomNum == i) {
-					npr.damageTaken(GameUtility.COLLISION_DAMAGE);
+	
+	/* Plays a sound based on the type of the otherObject */
+	public void playSound(Robot currentRobot, GameObject otherObject) {
+		if (isSoundOn()) {
+			
+			// plays "yay" sound when player reaches next base
+			if((otherObject instanceof Base) &&
+					(currentRobot instanceof PlayerRobot)) {
+				if((currentRobot.getLastBaseReached() + 1) == 
+						(((Base)otherObject).getSequenceOrder())) {
+					playerReachedBaseSound.play();
 				}
-				else currentObject = (GameObject)objects.getNext();
+			}
+			
+			else if(otherObject instanceof EnergyStation) {
+				energyCollisionSound.play();
+			}
+			else if((otherObject instanceof Robot) ||
+						(otherObject instanceof Drone)) {
+				robotCollisionSound.play();
 			}
 		}
-		notifyObservers();
 	}
 }
+
+
+
+
