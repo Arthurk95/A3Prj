@@ -21,6 +21,8 @@ public class CMDPause extends Command{
 		game = g;
 	}
 
+	/* Pauses/unpauses the game. Tells game to disable
+	 * buttons that shouldn't be used during pause state. */
 	@Override
 	public void actionPerformed(ActionEvent ev) {
 		isPaused = !isPaused;
@@ -28,14 +30,15 @@ public class CMDPause extends Command{
 			button.setText("Play");
 			timer.cancel();
 			game.pauseGame();
+			gameWorld.changeGamePause();
 		}
 		else {
 			button.setText("Pause");
-			timer.schedule(GameUtility.TICK_RATE, true, game);
 			gameWorld.deselectAll();
 			game.unPauseGame();
+			gameWorld.changeGamePause();
+			timer.schedule(GameUtility.TICK_RATE, true, game);
 		}
-		gameWorld.changeGamePause();
 	}
 	
 	public void setButton(MyButton b) {
