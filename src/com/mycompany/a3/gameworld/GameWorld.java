@@ -399,7 +399,8 @@ public class GameWorld extends Observable {
 			}
 			
 			else if(otherObject instanceof EnergyStation) {
-				energyCollisionSound.play();
+				if (((EnergyStation)otherObject).getCapacity() > 0)
+					energyCollisionSound.play();
 			}
 			else if((otherObject instanceof Robot) ||
 						(otherObject instanceof Drone)) {
