@@ -94,6 +94,7 @@ public class Game extends Form implements Runnable{
 		soundCB.getAllStyles().setPadding(Component.TOP, 5);
 		soundCB.getAllStyles().setPadding(Component.BOTTOM, 5);
 		soundCB.setCommand(soundCMD);
+		soundCB.setSelected(true);
 		
 		toolbar.addComponentToSideMenu(soundCB);
 		toolbar.addCommandToSideMenu(accelerateCMD);
