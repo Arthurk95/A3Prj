@@ -8,7 +8,7 @@
 package com.mycompany.a3.gameobject;
 
 import com.codename1.ui.geom.Point;
-
+import com.codename1.charts.util.ColorUtil;
 import com.codename1.ui.Graphics;
 import com.mycompany.a3.GameUtility;
 
@@ -29,6 +29,8 @@ public class Robot extends Movable implements ISteerable{
 	private int damageLevel = 0;
 	private int MAX_DAMAGE = GameUtility.MAX_SPEED;
 	private int lastBaseReached = 1;
+	private boolean justCollided = false;
+	private int drawRedSqTimer = 0;
 
 	public Robot(float startingX, float startingY, int[] color, int size) {
 		super(startingX, startingY, color, size); // initial values passed to Movable
@@ -247,10 +249,12 @@ public class Robot extends Movable implements ISteerable{
 	
 	private void collisionWithDrone() {
 		damageTaken(GameUtility.COLLISION_DAMAGE/2);
+		justCollided = true;
 	}
 
 	public void collisionWithRobot() {
 		damageTaken(GameUtility.COLLISION_DAMAGE);
+		justCollided = true;
 	}
 	
 	/* Draws a FILLED rectangle for the PlayerRobot, and unfilled 
@@ -268,6 +272,15 @@ public class Robot extends Movable implements ISteerable{
 			g.drawRect(xCorner, yCorner, this.getSize(), this.getSize());
 		else
 			g.fillRect(xCorner, yCorner, this.getSize(), this.getSize());
+		
+		if(justCollided) {
+			drawRedSqTimer = drawRedSqTimer + (GameUtility.TICK_RATE/20);
+			g.setColor(ColorUtil.rgb(255,0,0));
+			g.drawRect(xCorner, yCorner, this.getSize(), this.getSize());
+			if((GameUtility.TICK_RATE * 20) % drawRedSqTimer == 0) {
+				justCollided = false;
+			}
+		}
 	}
 	
 	public String toString() {
