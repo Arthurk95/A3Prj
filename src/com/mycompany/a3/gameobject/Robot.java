@@ -2,7 +2,6 @@
  * Robo-Track
  * Author: Arthur Kharit
  * CSC 133, Spring 2019
- * A1Prj
  * -------------------- */
 
 package com.mycompany.a3.gameobject;
@@ -20,7 +19,6 @@ import com.mycompany.a3.GameUtility;
  * will affect the Robot's heading when it moves accordingly.
  * 
  * A Robot's size cannot be changed after initialization.*/
-
 public class Robot extends Movable implements ISteerable{
 	private int steeringDirection = 0;
 	private float maximumSpeed = GameUtility.MAX_SPEED;
@@ -50,6 +48,7 @@ public class Robot extends Movable implements ISteerable{
 		checkIfValidCoordinates();
 	}
 	
+	/* Checks if the Robot is still within the GameWorld */
 	private void checkIfValidCoordinates() {
 		if(this.getXCoordinate() > GameUtility.gameSizeX())
 			setLocation(GameUtility.gameSizeX(), this.getYCoordinate());
@@ -211,7 +210,9 @@ public class Robot extends Movable implements ISteerable{
 	}
 
 	/* Handles the collision based on the type of the otherObject. 
-	 * If the otherObject also is affected, handles that too. */
+	 * If the otherObject also is affected, handles that too.
+	 * This way, handleCollision is only called once when there is
+	 * a collision between two GameObjects */
 	public void handleCollision(GameObject otherObject) {
 		if (otherObject instanceof EnergyStation) {
 			collisionWithEnergyStation(((EnergyStation)otherObject).getCapacity());
@@ -273,11 +274,13 @@ public class Robot extends Movable implements ISteerable{
 		else
 			g.fillRect(xCorner, yCorner, this.getSize(), this.getSize());
 		
+		/* If the Robot just collided with something, draw a red unfilled square
+		 * over it to indicate that it sustained damage */
 		if(justCollided) {
-			drawRedSqTimer = drawRedSqTimer + (GameUtility.TICK_RATE/20);
+			drawRedSqTimer = drawRedSqTimer + GameUtility.TICK_RATE;
 			g.setColor(ColorUtil.rgb(255,0,0));
 			g.drawRect(xCorner, yCorner, this.getSize(), this.getSize());
-			if((GameUtility.TICK_RATE * 20) % drawRedSqTimer == 0) {
+			if(2000 % drawRedSqTimer == 0) { // 2 seconds
 				justCollided = false;
 			}
 		}
