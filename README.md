@@ -1,6 +1,6 @@
 # A3Prj
 
-Part 3 of the CSC 133 Robot Game project.
+Part 3 of the Spring 2019 CSC 133 Robot Game project.
 
 *This is a temporary README file*
 
